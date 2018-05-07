@@ -26,6 +26,8 @@ int main(){
             rect.insert(a[i].x);
             rect.insert(a[i].y);
             a[i].z=a[i].x*a[i].x+a[i].y*a[i].y;
+            if()
+
             rectFiel.insert(a[i].z);
 
         }
