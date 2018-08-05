@@ -16,7 +16,8 @@
 
 ### 思路总结
 
-
+- 
+- 
 
 ### 题目
 
@@ -499,8 +500,6 @@ There are 5 ways to assign symbols to make the sum of nums be target 3.
                 2 * sum(P) = target + sum(nums)
                
        ```
-    ```
-  
   - 本来我们是要把集合拆分成正数和负数然后想加得到目标
   
   - 现在我们用等价的公式转换成，只需要求子集等于target+sum(nums)的一半有多少方案就可以
@@ -512,7 +511,7 @@ There are 5 ways to assign symbols to make the sum of nums be target 3.
   - 方案数应该是累加的。所以列应该是从第num[i]开始
   
   - 符合条件就累加，否则不变
-    ```
+
 
 
 
@@ -553,3 +552,318 @@ Output: false
 
 #### 思路
 
+- 求是否满足条件，返回true或false
+- dp数组内容应该存放布尔值，同时这是个累加状态类型
+- 显然，dp\[i\]\[j\]，行应该是字典去重的长度，列应该是字符串的长度
+  - j=0时，长度为0，显然为true
+  - j顺着列递推前进
+  - 显然这个思路是错的！！！
+- 应该是行与列都字符串的长度
+  - 判断条件，j到i之间有无对应词典可以满足。
+  - 在加一个条件，保证可以累加状态，就是前j个字符是否有对应的字典对应
+
+#### 474. Ones and Zeroes
+
+In the computer world, use restricted resource you have to generate maximum benefit is what we always want to pursue.
+
+For now, suppose you are a dominator of **m** `0s` and **n** `1s` respectively. On the other hand, there is an array with strings consisting of only `0s` and `1s`.
+
+Now your task is to find the maximum number of strings that you can form with given **m** `0s` and **n** `1s`. Each `0` and `1` can be used at most **once**.
+
+**Note:**
+
+1. The given numbers of `0s` and `1s` will both not exceed `100`
+2. The size of given string array won't exceed `600`.
+
+**Example 1:**
+
+```
+Input: Array = {"10", "0001", "111001", "1", "0"}, m = 5, n = 3
+Output: 4
+
+Explanation: This are totally 4 strings can be formed by the using of 5 0s and 3 1s, which are “10,”0001”,”1”,”0”
+```
+
+**Example 2:**
+
+```
+Input: Array = {"10", "0", "1"}, m = 1, n = 1
+Output: 2
+
+Explanation: You could form "10", but then you'd have nothing left. Better form "0" and "1".
+```
+
+#### 思路
+
+- 已知字符串数组，和m,n。如何用m，n给的0和1个数尽可能的组合出字符串数组里面的字符串。越多越好
+  - dp数组内容存放应该是可以存放字符串的个数
+  - 行对应着0个数，列对应1个数。仍然是个累加状态
+  - 确定条件，应该又上一行和上一列并减去对应着0，1个数来决定
+- 正确思路
+  - 核心基本上没有太大变化，但对于这道题目，应该是3维的dp数组！
+  - 第一维对应着字符串数组的长度
+  - 每个字符串都会有一张状态表m*n
+  - 更新状态表，要参考上一张表。也就是累加状态的过程
+  - 符合条件就加1，不符合就不变
+
+
+
+#### 322. Coin Change
+
+You are given coins of different denominations and a total amount of money *amount*. Write a function to compute the fewest number of coins that you need to make up that amount. If that amount of money cannot be made up by any combination of the coins, return `-1`.
+
+**Example 1:**
+
+```
+Input: coins = [1, 2, 5], amount = 11
+Output: 3 
+Explanation: 11 = 5 + 5 + 1
+```
+
+**Example 2:**
+
+```
+Input: coins = [2], amount = 3
+Output: -1
+```
+
+**Note**:
+You may assume that you have an infinite number of each kind of coin.
+
+
+
+#### 思路
+
+- 给出数组金额和目标金额。求用最少的钱凑成目标金额
+- dp数组存放的是，最少金额的纸张数
+  - 行表示数组长度，列表示目标金额长度
+  - 显然是个累加状态的过程
+  - 所以筛选的条件是
+  - 那么当前状态取决于上一行状态的同一列或者同一列减去金额后的一列
+  - 最好给数组排个序
+  - 符合条件，在上一个状态加1，不符合则赋值为0
+  - 应该说两个状态取最小的一个状态
+- 更好的方案
+  - 可以完善，压缩成一维数组，然后不停更新一维数组就行
+  - 这里还有初始化问题，应该初始化为integer的最大值
+
+#### 377. Combination Sum IV
+
+Given an integer array with all positive numbers and no duplicates, find the number of possible combinations that add up to a positive integer target.
+
+**Example:**
+
+```
+nums = [1, 2, 3]
+target = 4
+
+The possible combination ways are:
+(1, 1, 1, 1)
+(1, 1, 2)
+(1, 2, 1)
+(1, 3)
+(2, 1, 1)
+(2, 2)
+(3, 1)
+
+Note that different sequences are counted as different combinations.
+
+Therefore the output is 7.
+```
+
+**Follow up:**
+What if negative numbers are allowed in the given array?
+How does it change the problem?
+What limitation we need to add to the question to allow negative numbers?
+
+
+
+#### 思路
+
+- 给定一个数组，和目标和
+- 和上一题目类似，求方案总数，而不是求最少方案的个数
+  - dp存放总数，并且是状态累加的过程
+  - 一维数组就行，然后不断更新。
+  - 行是数组，列是目标和
+  - 列的推进取决减去当前数的那个位置的状态
+  - 如果符合，就加上之前的。
+  - 初始化第一列为1
+
+
+
+
+#### 123. Best Time to Buy and Sell Stock III
+
+Say you have an array for which the *i*th element is the price of a given stock on day *i*.
+
+Design an algorithm to find the maximum profit. You may complete at most *two* transactions.
+
+**Note:** You may not engage in multiple transactions at the same time (i.e., you must sell the stock before you buy again).
+
+**Example 1:**
+
+```
+Input: [3,3,5,0,0,3,1,4]
+Output: 6
+Explanation: Buy on day 4 (price = 0) and sell on day 6 (price = 3), profit = 3-0 = 3.
+             Then buy on day 7 (price = 1) and sell on day 8 (price = 4), profit = 4-1 = 3.
+```
+
+**Example 2:**
+
+```
+Input: [1,2,3,4,5]
+Output: 4
+Explanation: Buy on day 1 (price = 1) and sell on day 5 (price = 5), profit = 5-1 = 4.
+             Note that you cannot buy on day 1, buy on day 2 and sell them later, as you are
+             engaging multiple transactions at the same time. You must sell before buying again.
+```
+
+**Example 3:**
+
+```
+Input: [7,6,4,3,1]
+Output: 0
+Explanation: In this case, no transaction is done, i.e. max profit = 0.
+```
+
+#### 思路
+
+- 非常典型的推进过程。累加状态！
+  - dp数组，行和列都是数组的长度，内容存放的是当前状态最大收益！
+  - 当前状态由哪些决定呢？
+  - 上一行的当前列的内容，和减去金额的差值也就是列的数字减去行，前提是下标，行小于列。
+  - 选择最大的就行
+
+
+
+#### 188. Best Time to Buy and Sell Stock IV
+#### 思路
+
+- 
+
+
+
+
+
+#### 72. Edit Distance 
+
+
+
+#### 309. Best Time to Buy and Sell Stock with Cooldown
+
+
+
+
+
+#### 714. Best Time to Buy and Sell Stock with Transaction Fee 
+
+
+
+
+
+
+
+#### 121. Best Time to Buy and Sell Stock 
+
+
+
+
+
+
+
+#### 583. Delete Operation for Two Strings 
+
+#### 
+
+
+
+44.
+
+
+
+32.
+
+
+
+639.
+
+
+
+10.
+
+741.
+
+174.
+
+321.
+
+140.
+
+871.
+
+
+
+132.
+
+
+
+97.
+
+466 .
+
+
+
+629.
+
+
+
+446.
+
+
+
+818.
+
+87.
+
+85.
+
+
+
+879.
+
+
+
+472.
+
+552.
+
+600
+
+115.
+
+354.
+
+403.
+
+363.
+
+664.
+
+691.
+
+730.
+
+546.
+
+517.
+
+514.
+
+410.
+
+689.
+
+847.
+
+312.
