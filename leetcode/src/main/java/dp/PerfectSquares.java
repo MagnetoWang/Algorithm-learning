@@ -35,7 +35,7 @@ public class PerfectSquares {
         return 3;
 
     }
-    public static boolean isSqure(int n)
+    private static boolean isSqure(int n)
     {
         double fsqrt = Math.sqrt(n);//先将数开平方
         int m = (int) fsqrt;//转换成整数

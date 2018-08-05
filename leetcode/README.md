@@ -191,7 +191,7 @@ Explanation: 13 = 4 + 9.
 
 #### 思路
 
-- 难点，先搞定怎么划分，再来找最大的一组划分数
+- 难点，先搞定怎么划分，再来找最小的一组划分数
 - 查阅资料：四平方和定理
   - 4^k*(8*m + 7)，满足这个公式即可
 - 题目要求是只需要返回个数即可
@@ -201,5 +201,355 @@ Explanation: 13 = 4 + 9.
 - 不满足四平方和定理的话就考虑
 - Legendre's three-square theorem
   - ![n=x^{2}+y^{2}+z^{2}](https://wikimedia.org/api/rest_v1/media/math/render/svg/d21f8b668e4450e588abd892ed19cae7e2b61835) 
-- 
+- 循环判断是否为两个数的平方和
+  - 如果是，return 2
+  - 否则，return 3
+
+
+
+
+
+#### 91. Decode Ways 
+
+A message containing letters from `A-Z` is being encoded to numbers using the following mapping:
+
+```
+'A' -> 1
+'B' -> 2
+...
+'Z' -> 26
+```
+
+Given a **non-empty** string containing only digits, determine the total number of ways to decode it.
+
+**Example 1:**
+
+```
+Input: "12"
+Output: 2
+Explanation: It could be decoded as "AB" (1 2) or "L" (12).
+```
+
+**Example 2:**
+
+```
+Input: "226"
+Output: 3
+Explanation: It could be decoded as "BZ" (2 26), "VF" (22 6), or "BBF" (2 2 6).
+```
+
+#### 思路
+
+- 通过前面一些题目子数组之类，还有找数列的多少种子数列。
+- 我们可以猜想，这也是个累加的一个过程。
+- 可以累加的话，就需要找一个单位，作为累加的基本条件。
+- 我个人认为，这个累加的基本的单位就是连续两个数字，是否在1到26以内。
+- 注意：对于0要特殊处理
+- 那么怎么加呢？
+- 应该是要参考前两个位置的和才行
+- 先解决临界位置，0和1
+  - 第0个位置，种类是1。
+  - 第1个位置，也是1。
+  - 那么第2个的位置，就是存放前面两个字母的种类数的情况决定。同时也是存放前2个字母的最终答案
+  - 如果0和1可以组合，那么第2个位置加上第0个和第1个
+  - 如果不可以，那么第2个位置加上第1个即可
+  - 同样当数组变长，就考虑第3个，第4个之类，依次类推
+- 说实话，我还是不理解，为什么这样的状态公式可以求解出答案。
+- 现在回想一下，可不可以这样理解
+  - 比如说现在5个数字。
+  - 前3个是不用考虑的，之前讲过了
+  - 那么在第4个数字上，如果第3个数字符合规定不等于0，那么加上
+  - 如果第3个数字和第2个数字可以组合成一个字母，对于这两个字母来说，可以看成一个整体。那么就可以加上作为一个整体的情况，也就是一个字母的情况之前的状态
+
+
+
+#### 400. [Longest Increasing Subsequence](https://leetcode.com/problems/longest-increasing-subsequence/discuss/74824/JavaPython-Binary-search-O(nlogn)-time-with-explanation)
+
+Given an unsorted array of integers, find the length of longest increasing subsequence.
+
+**Example:**
+
+```
+Input: [10,9,2,5,3,7,101,18]
+Output: 4 
+Explanation: The longest increasing subsequence is [2,3,7,101], therefore the length is 4. 
+```
+
+**Note:**
+
+- There may be more than one LIS combination, it is only necessary for you to return the length.
+- Your algorithm should run in O(*n2*) complexity.
+
+**Follow up:** Could you improve it to O(*n* log *n*) time complexity?
+
+#### 思路
+
+- 题目要求找的是最长增长子序列，是子序列， 也是说不具备连续性了。更多的还是一种状态
+
+- 返回长度就行了
+
+- 常规思路
+
+  - 构造一个dp数组。存放对应数组第i个位置的最长子序列长度
+  - 每次在第i个数，遍历之前的数组，如果遇到符合条件（大于或者小于），在第i个位置的长度基础上增加1即可
+  - 不停的更新这样每个数
+  - 最终n*n的复杂度
+
+- 更快的方法
+
+  - 构造尾巴数组，数组的下标表示长度，第i个位置存放的内容是，数组中长度为i的递增子序列中，子序列的最后一个数。要么是最大，要么是最小取决于看条件
+  - 这里对数组循环，每次更新尾巴数组。
+  - 更新尾巴数组的代码非常考验代码实现能力！主要是下标极易出错，还有逻辑方面需要非常严谨！
+
+
+
+#### 646. Maximum Length of Pair Chain 
+
+You are given `n` pairs of numbers. In every pair, the first number is always smaller than the second number.
+
+Now, we define a pair `(c, d)` can follow another pair `(a, b)` if and only if `b < c`. Chain of pairs can be formed in this fashion.
+
+Given a set of pairs, find the length longest chain which can be formed. You needn't use up all the given pairs. You can select pairs in any order.
+
+**Example 1:**
+
+```
+Input: [[1,2], [2,3], [3,4]]
+Output: 2
+Explanation: The longest chain is [1,2] -> [3,4]
+```
+
+**Note:**
+
+1. The number of given pairs will be in the range [1, 1000].
+
+
+
+#### 思路
+
+- 贪心算法
+  - 按照每个二元数，对第一位数，进行排序
+  - 定义一个变量tail，初始化为最小值
+  - 如果二元组第二位小于这个变量，那么更新这个变量值
+  - 如果二元组第一位大于这个变量，那么增加长度，并将第一位的数更新到tail
+  - 循环反复 
+  - 这个贪心法有点绕，并且取巧，总之第一次不能理解到位
+- 贪心算法2-更好理解
+  - 对第二位进行排序
+  - 定义变量tail，为第一数组对的第二位。显然这一定是数组链的第一个数。
+  - 然后从第一数组对开始遍历
+  - 如果找到第一位比tail大的就更新长度
+  - 循环反复
+  - 这个算法没有那么绕，不过我总觉得会不会遗漏什么可能性
+- dp
+  - dp数组维护在第i个下标下，dp的内容是第i个数遍历整个数组对，然后找到符合条件的内容，并选取其中一个最大值，并更新进去
+  - 符合的条件就是题目的要求
+
+
+
+
+
+#### 376. Wiggle Subsequence
+
+A sequence of numbers is called a **wiggle sequence** if the differences between successive numbers strictly alternate between positive and negative. The first difference (if one exists) may be either positive or negative. A sequence with fewer than two elements is trivially a wiggle sequence.
+
+For example, `[1,7,4,9,2,5]` is a wiggle sequence because the differences (6,-3,5,-7,3) are alternately positive and negative. In contrast, `[1,4,7,2,5]` and `[1,7,4,5,5]` are not wiggle sequences, the first because its first two differences are positive and the second because its last difference is zero.
+
+Given a sequence of integers, return the length of the longest subsequence that is a wiggle sequence. A subsequence is obtained by deleting some number of elements (eventually, also zero) from the original sequence, leaving the remaining elements in their original order.
+
+**Examples:**
+
+```
+Input: [1,7,4,9,2,5]
+Output: 6
+The entire sequence is a wiggle sequence.
+
+Input: [1,17,5,10,13,15,10,5,16,8]
+Output: 7
+There are several subsequences that achieve this length. One is [1,17,10,13,10,16,8].
+
+Input: [1,2,3,4,5,6,7,8,9]
+Output: 2
+```
+
+**Follow up:**
+Can you do it in O(*n*) time?
+
+
+
+#### 思路
+
+-  要求最长的子序列，子序列必须符合的条件是他们之间的差必须是正负交替
+- 那么一定需要判断正负之间的关系
+- 建立两个数组up和down,都是存放着正负交替的长度，但是存放的分别是一个以正数为结尾的长度，另一是负数结尾的长度。
+- 也就是当前的数组下标位置，有两个可能的结尾，要么正数，要么负数。选择最长的一个
+- 而每一个结尾的状态都取决于另一个数组基础上+1
+- up保存之间差为正数的状态，down保存差为负数的状态
+- 差为正数时，up显然可以从down当前的长度+1，down保持不变，继续推进。
+- 同理负数
+- 最终选择最长的一个
+- 这种就是状态的累加，以及状态的拆分
+
+
+
+#### 416. [Partition Equal Subset Sum](http://www.cnblogs.com/grandyang/p/5951422.html) 
+
+Given a **non-empty** array containing **only positive integers**, find if the array can be partitioned into two subsets such that the sum of elements in both subsets is equal.
+
+**Note:**
+
+1. Each of the array element will not exceed 100.
+2. The array size will not exceed 200.
+
+**Example 1:**
+
+```
+Input: [1, 5, 11, 5]
+
+Output: true
+
+Explanation: The array can be partitioned as [1, 5, 5] and [11].
+```
+
+**Example 2:**
+
+```
+Input: [1, 2, 3, 5]
+
+Output: false
+
+Explanation: The array cannot be partitioned into equal sum subsets.
+```
+
+#### 思路
+
+- 其实就是从一个集合拆分成两个集合。然后两个集合的和都要相等
+- 如何拆分呢。状态是相等与不相等。又如何平衡迭代呢？
+  - 找规律
+  - 先排序
+  - 一个从头开始，一个从尾巴开始。往中间聚合
+  - 显然是错误的！！！！！
+- 0/1背包算法
+  - 一开始没理解，那么就多看几遍
+  - 定义dp\[i\]\[j\],行是给的数组的长度，列是算出数组和，然后定义为列的长度
+  - 那么可以这样理解前i行是否有等于j的和。
+  - 代码实现中，首先遍历数组。
+  - 相当于一行一行的往下推进
+  - 每一行都从列开始一行行往右推进
+  - 那么对于dp\[i\]\[j\]是由上一行，第j个位置或者，第j-num\[i\]来决定的
+  - 列的推进比较有讲究
+  - 起始位置是数组和的一半，然后一直自减到数组第i个的值。
+  - 符合的条件返回true，否则就是false
+
+
+
+#### 494. [Target Sum](https://leetcode.com/problems/target-sum/discuss/97334/Java-(15-ms)-C++-(3-ms)-O(ns)-iterative-DP-solution-using-subset-sum-with-explanation) 
+
+You are given a list of non-negative integers, a1, a2, ..., an, and a target, S. Now you have 2 symbols `+` and `-`. For each integer, you should choose one from `+` and `-` as its new symbol.
+
+Find out how many ways to assign symbols to make sum of integers equal to target S.
+
+**Example 1:**
+
+```
+Input: nums is [1, 1, 1, 1, 1], S is 3. 
+Output: 5
+Explanation: 
+
+-1+1+1+1+1 = 3
++1-1+1+1+1 = 3
++1+1-1+1+1 = 3
++1+1+1-1+1 = 3
++1+1+1+1-1 = 3
+
+There are 5 ways to assign symbols to make the sum of nums be target 3.
+```
+
+**Note:**
+
+1. The length of the given array is positive and will not exceed 20.
+2. The sum of elements in the given array will not exceed 1000.
+3. Your output answer is guaranteed to be fitted in a 32-bit integer.
+
+
+
+#### 思路
+
+- 求多少种方式满足这个目标数。累加状态法！
+
+- 对于每个数都是两种状态，+或-
+
+- 我的想法
+  - dp\[i\]\[j\]，行是数组长度，列是目标数的大小，内容存放
+  - 遍历行
+  - 对于列来说，我认为依然是由上一行所决定，而且可能就是j和j-num[i]
+  - ok,现在问题是临界的条件是什么？
+
+- 目前比较好的方案
+
+  - 将问题变一下，当然dp还是我前面那个dp
+
+  - 我们求的是集合中的方案数，有正有负，非常难算
+
+  - 网上的方案是
+
+  - ```
+           sum(P) - sum(N) = target
+         sum(P) + sum(N) + sum(P) - sum(N) = target + sum(P) + sum(N)
+                2 * sum(P) = target + sum(nums)
+               
+       ```
+    ```
+  
+  - 本来我们是要把集合拆分成正数和负数然后想加得到目标
+  
+  - 现在我们用等价的公式转换成，只需要求子集等于target+sum(nums)的一半有多少方案就可以
+  
+  - 那么这就是常规的dp算法了
+  
+  - dp的内容存放的是方案数！
+  
+  - 方案数应该是累加的。所以列应该是从第num[i]开始
+  
+  - 符合条件就累加，否则不变
+    ```
+
+
+
+
+
+#### 139. Word Break 
+
+Given a **non-empty** string *s* and a dictionary *wordDict* containing a list of **non-empty** words, determine if *s* can be segmented into a space-separated sequence of one or more dictionary words.
+
+**Note:**
+
+- The same word in the dictionary may be reused multiple times in the segmentation.
+- You may assume the dictionary does not contain duplicate words.
+
+**Example 1:**
+
+```
+Input: s = "leetcode", wordDict = ["leet", "code"]
+Output: true
+Explanation: Return true because "leetcode" can be segmented as "leet code".
+```
+
+**Example 2:**
+
+```
+Input: s = "applepenapple", wordDict = ["apple", "pen"]
+Output: true
+Explanation: Return true because "applepenapple" can be segmented as "apple pen apple".
+             Note that you are allowed to reuse a dictionary word.
+```
+
+**Example 3:**
+
+```
+Input: s = "catsandog", wordDict = ["cats", "dog", "sand", "and", "cat"]
+Output: false
+```
+
+#### 思路
 
