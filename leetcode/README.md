@@ -868,3 +868,284 @@ Explanation: In this case, no transaction is done, i.e. max profit = 0.
 847.
 
 312.
+
+
+
+
+
+## 数组
+
+### 思路总结
+
+### 题目
+
+#### 126. [Word Ladder II](https://leetcode.com/problems/word-ladder-ii/discuss/40475/My-concise-JAVA-solution-based-on-BFS-and-DFS) 
+
+Given two words (*beginWord* and *endWord*), and a dictionary's word list, find all shortest transformation sequence(s) from *beginWord* to *endWord*, such that:
+
+1. Only one letter can be changed at a time
+2. Each transformed word must exist in the word list. Note that *beginWord* is *not* a transformed word.
+
+**Note:**
+
+- Return an empty list if there is no such transformation sequence.
+- All words have the same length.
+- All words contain only lowercase alphabetic characters.
+- You may assume no duplicates in the word list.
+- You may assume *beginWord* and *endWord* are non-empty and are not the same.
+
+**Example 1:**
+
+```
+Input:
+beginWord = "hit",
+endWord = "cog",
+wordList = ["hot","dot","dog","lot","log","cog"]
+
+Output:
+[
+  ["hit","hot","dot","dog","cog"],
+  ["hit","hot","lot","log","cog"]
+]
+```
+
+**Example 2:**
+
+```
+Input:
+beginWord = "hit"
+endWord = "cog"
+wordList = ["hot","dot","dog","lot","log"]
+
+Output: []
+
+Explanation: The endWord "cog" is not in wordList, therefore no possible transformation.
+```
+
+#### 思路
+
+- 给出两个单词，一个beginWord，一个endWord。再给出一个词典。判断begin变换到end最短过程。每次只能变一个字母。变的单词必须符合在词典中
+- 方法：dfs或者bfs,hashmap
+- 每次用26个字母对单词的每个位置都进行遍历
+- 每次遍历判断条件是否在单词列表中
+- 同时在定义一个路径对象，hashmap保存路径单词和长度
+
+
+
+#### 4. [Median of Two Sorted Arrays](https://leetcode.com/problems/median-of-two-sorted-arrays/description/) 
+
+There are two sorted arrays **nums1** and **nums2** of size m and n respectively.
+
+Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).
+
+You may assume **nums1** and **nums2** cannot be both empty.
+
+ 
+
+**Example 1:**
+
+```
+nums1 = [1, 3]
+nums2 = [2]
+
+The median is 2.0
+```
+
+**Example 2:**
+
+```
+nums1 = [1, 2]
+nums2 = [3, 4]
+
+The median is (2 + 3)/2 = 2.5
+```
+
+#### [思路](https://leetcode.com/problems/median-of-two-sorted-arrays/discuss/2471/very-concise-ologminmn-iterative-solution-with-detailed-explanation)
+
+- 二分法
+
+
+
+#### 45. Jump Game II
+
+Given an array of non-negative integers, you are initially positioned at the first index of the array.
+
+Each element in the array represents your maximum jump length at that position.
+
+Your goal is to reach the last index in the minimum number of jumps.
+
+**Example:**
+
+```
+Input: [2,3,1,1,4]
+Output: 2
+Explanation: The minimum number of jumps to reach the last index is 2.
+    Jump 1 step from index 0 to 1, then 3 steps to the last index.
+```
+
+**Note:**
+
+You can assume that you can always reach the last index.
+
+#### 思路
+
+- 循环状态保存最大值法
+- 分结构来思考问题
+- 一个大循环，每次选出max最大的数。由i+a[i]决定
+- 这个时候用一个条件来更新，我们的最短路径
+- 因为一定会遍历到某个i位置。遍历到i位置的时候，说明已经可以更改我们的路径。我们的路径由之前走的路最大的路程决定。也就是max
+- 非常简短的代码
+
+```java
+public int jump(int[] A) {
+    int sc = 0;
+    int e = 0;
+    int max = 0;
+    for(int i=0; i<A.length-1; i++) {
+        max = Math.max(max, i+A[i]);
+        if( i == e ) {
+            sc++;
+            e = max;
+        } 
+    }
+    return sc;
+}
+```
+
+#### [41. First Missing Positive](https://leetcode.com/problems/first-missing-positive/description/)
+
+Given an unsorted integer array, find the smallest missing positive integer.
+
+**Example 1:**
+
+```
+Input: [1,2,0]
+Output: 3
+```
+
+**Example 2:**
+
+```
+Input: [3,4,-1,1]
+Output: 2
+```
+
+**Example 3:**
+
+```
+Input: [7,8,9,11,12]
+Output: 1
+```
+
+**Note:**
+
+Your algorithm should run in *O*(*n*) time and uses constant extra space.
+
+#### 思路
+
+- 排除法和调换法
+- 先把大于数组长度本身数字删除，以及小于0的删除
+- 在数组长度内的数字，调换到和下标和他一样的数字
+- 最后在遍历一次不存在的就返回
+
+
+
+
+
+
+
+#### 719. Find K-th Smallest Pair Distance 
+
+Given an integer array, return the k-th smallest **distance** among all the pairs. The distance of a pair (A, B) is defined as the absolute difference between A and B.
+
+**Example 1:**
+
+```
+Input:
+nums = [1,3,1]
+k = 1
+Output: 0 
+Explanation:
+Here are all the pairs:
+(1,3) -> 2
+(1,1) -> 0
+(3,1) -> 2
+Then the 1st smallest distance pair is (1,1), and its distance is 0.
+```
+
+**Note:**
+
+1. `2 <= len(nums) <= 10000`.
+2. `0 <= nums[i] < 1000000`.
+3. `1 <= k <= len(nums) * (len(nums) - 1) / 2`.
+
+#### 思路
+
+- 二分法
+- 这里通过二分的判断条件，不是单纯的比较大小，而是一个子函数形式。但是整体思路是二分法
+- 关键找出判定函数
+- 此题求的是第k个最小的差值
+  - 先排序
+  - 显然最大的差值是最后一个减去第一个
+  - 最小的差值说不准。都有可能相邻的为1
+  - 所以要从最大差值入手
+  - 三层循环
+  - 第一层是从0到最大差值直接的循环
+  - 第二层是数组的遍历
+  - 第三层是遍历第二层之前的数组，并求出它们之间的差值
+  - 如果是大于mid,那么统计下来，最终如果超过K，那么就要调整mid的位置了
+  - 调整完再来后面两层循环，直到有合适的mid出现
+- 代码短小精悍
+
+```c++
+class Solution {
+public:
+    int smallestDistancePair(vector<int>& nums, int k) {
+        sort(nums.begin(), nums.end());
+        int n = nums.size(), left = 0, right = nums.back() - nums[0];
+        while (left < right) {
+            int mid = left + (right - left) / 2, cnt = 0, start = 0;
+            for (int i = 0; i < n; ++i) {
+                while (start < n && nums[i] - nums[start] > mid) ++start;
+                cnt += i - start;
+            }
+            if (cnt < k) left = mid + 1;
+            else right = mid;
+        }
+        return right;
+    }
+};
+```
+
+
+
+
+
+#### 84. Largest Rectangle in Histogram 
+
+Given *n* non-negative integers representing the histogram's bar height where the width of each bar is 1, find the area of largest rectangle in the histogram.
+
+![img](https://leetcode.com/static/images/problemset/histogram.png)
+Above is a histogram where width of each bar is 1, given height = `[2,1,5,6,2,3]`.
+
+ 
+
+![img](https://leetcode.com/static/images/problemset/histogram_area.png)
+The largest rectangle is shown in the shaded area, which has area = `10` unit.
+
+ 
+
+**Example:**
+
+```
+Input: [2,1,5,6,2,3]
+Output: 10
+```
+
+
+#### 思路
+
+
+
+
+
