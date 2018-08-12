@@ -6,6 +6,11 @@
 
 
 
+## TODOLIST
+
+- [ ] 57
+- [ ] 
+
 ## 算法思路归纳
 
 - 与其拼命无脑的刷题，不如把题目的规律总结一下。也方便快速复习
@@ -1126,7 +1131,7 @@ public:
 Given *n* non-negative integers representing the histogram's bar height where the width of each bar is 1, find the area of largest rectangle in the histogram.
 
 ![img](https://leetcode.com/static/images/problemset/histogram.png)
-Above is a histogram where width of each bar is 1, given height = `[2,1,5,6,2,3]`.
+Above is a histogam where width of each bar is 1, given height = `[2,1,5,6,2,3]`.
 
  
 
@@ -1142,8 +1147,220 @@ Input: [2,1,5,6,2,3]
 Output: 10
 ```
 
+#### 思路
+
+- 二层循环遍历
+
+
+
+```
+
+public class MaxInnerRec {
+    public int countArea(int[] A, int n) {
+        int maxArea=0;
+        int min;
+        for(int i=0;i<n;i++){
+            min=Integer.MAX_VALUE;
+            for(int j=i;j>=0;j--){
+                min=Math.min(min, A[j]);
+                maxArea=Math.max(maxArea,(i-j+1)*min);
+            }
+        }
+        return maxArea;
+    }
+}
+```
+
+
+
+- 方法二;递增的栈 
+- 每次只压比栈顶大的元素。否则就提出来，然后做计算
+
+
+
+
+
+#### 57. Insert Interval
+
+Given a set of *non-overlapping* intervals, insert a new interval into the intervals (merge if necessary).
+
+You may assume that the intervals were initially sorted according to their start times.
+
+**Example 1:**
+
+```
+Input: intervals = [[1,3],[6,9]], newInterval = [2,5]
+Output: [[1,5],[6,9]]
+```
+
+**Example 2:**
+
+```
+Input: intervals = [[1,2],[3,5],[6,7],[8,10],[12,16]], newInterval = [4,8]
+Output: [[1,2],[3,10],[12,16]]
+Explanation: Because the new interval [4,8] overlaps with [3,5],[6,7],[8,10].
+```
 
 #### 思路
+
+- 这个题目感觉很没意思
+
+
+
+
+
+
+
+
+
+#### [381. Insert Delete GetRandom O(1) - Duplicates allowed](https://leetcode.com/problems/insert-delete-getrandom-o1-duplicates-allowed/description/)
+
+Design a data structure that supports all following operations in *average* **O(1)** time.
+
+Note: Duplicate elements are allowed.
+
+1. `insert(val)`: Inserts an item val to the collection.
+2. `remove(val)`: Removes an item val from the collection if present.
+3. `getRandom`: Returns a random element from current collection of elements. The probability of each element being returned is **linearly related** to the number of same value the collection contains.
+
+**Example:**
+
+```
+// Init an empty collection.
+RandomizedCollection collection = new RandomizedCollection();
+
+// Inserts 1 to the collection. Returns true as the collection did not contain 1.
+collection.insert(1);
+
+// Inserts another 1 to the collection. Returns false as the collection contained 1. Collection now contains [1,1].
+collection.insert(1);
+
+// Inserts 2 to the collection, returns true. Collection now contains [1,1,2].
+collection.insert(2);
+
+// getRandom should return 1 with the probability 2/3, and returns 2 with the probability 1/3.
+collection.getRandom();
+
+// Removes 1 from the collection, returns true. Collection now contains [1,2].
+collection.remove(1);
+
+// getRandom should return 1 and 2 both equally likely.
+collection.getRandom();
+```
+
+#### 思路
+
+- Java HaspMap, LinkedHashSet, ArrayList 
+
+
+
+
+
+#### 85. Maximal Rectangle 
+
+Given a 2D binary matrix filled with 0's and 1's, find the largest rectangle containing only 1's and return its area.
+
+**Example:**
+
+```
+Input:
+[
+  ["1","0","1","0","0"],
+  ["1","0","1","1","1"],
+  ["1","1","1","1","1"],
+  ["1","0","0","1","0"]
+]
+Output: 6
+```
+
+#### 思路
+
+- https://leetcode.com/problems/maximal-rectangle/discuss/29054/Share-my-DP-solution
+
+
+
+
+
+
+
+#### 715. Range Module 
+
+A Range Module is a module that tracks ranges of numbers. Your task is to design and implement the following interfaces in an efficient manner.
+
+`addRange(int left, int right)` Adds the half-open interval `[left, right)`, tracking every real number in that interval. Adding an interval that partially overlaps with currently tracked numbers should add any numbers in the interval `[left, right)` that are not already tracked.
+
+`queryRange(int left, int right)` Returns true if and only if every real number in the interval `[left, right)` is currently being tracked.
+
+`removeRange(int left, int right)` Stops tracking every real number currently being tracked in the interval `[left, right)`.
+
+**Example 1:**
+
+```
+addRange(10, 20): null
+removeRange(14, 16): null
+queryRange(10, 14): true (Every number in [10, 14) is being tracked)
+queryRange(13, 15): false (Numbers like 14, 14.03, 14.17 in [13, 15) are not being tracked)
+queryRange(16, 17): true (The number 16 in [16, 17) is still being tracked, despite the remove operation)
+```
+
+**Note:**
+
+A half open interval `[left, right)` denotes all real numbers `left <= x < right`.
+
+`0 < left < right < 10^9` in all calls to `addRange, queryRange, removeRange`.
+
+The total number of calls to `addRange` in a single test case is at most `1000`.
+
+The total number of calls to `queryRange` in a single test case is at most `5000`.
+
+The total number of calls to `removeRange` in a single test case is at most `1000`.
+
+#### 思路
+
+- https://leetcode.com/problems/range-module/discuss/108910/Java-TreeMap
+
+
+
+####  123. Best Time to Buy and Sell Stock III
+
+Say you have an array for which the *i*th element is the price of a given stock on day *i*.
+
+Design an algorithm to find the maximum profit. You may complete at most *two* transactions.
+
+**Note:** You may not engage in multiple transactions at the same time (i.e., you must sell the stock before you buy again).
+
+**Example 1:**
+
+```
+Input: [3,3,5,0,0,3,1,4]
+Output: 6
+Explanation: Buy on day 4 (price = 0) and sell on day 6 (price = 3), profit = 3-0 = 3.
+             Then buy on day 7 (price = 1) and sell on day 8 (price = 4), profit = 4-1 = 3.
+```
+
+**Example 2:**
+
+```
+Input: [1,2,3,4,5]
+Output: 4
+Explanation: Buy on day 1 (price = 1) and sell on day 5 (price = 5), profit = 5-1 = 4.
+             Note that you cannot buy on day 1, buy on day 2 and sell them later, as you are
+             engaging multiple transactions at the same time. You must sell before buying again.
+```
+
+**Example 3:**
+
+```
+Input: [7,6,4,3,1]
+Output: 0
+Explanation: In this case, no transaction is done, i.e. max profit = 0.
+```
+
+#### 思路
+
+ 
+
+
 
 
 

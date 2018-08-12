@@ -2,10 +2,13 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
+        wangyi_3();
+//        wangyi_2();
+//        wangyi_1();
 //        pinduoduo_1();
 //        pinduoduo_2();
 //        pingduoduo_3();
-        pingduoduo_4();
+//        pingduoduo_4();
 //        Scanner in=new
 // Scanner(System.in);
 //        int numeber=Integer.valueOf(in.nextLine());
@@ -194,6 +197,145 @@ public class Main {
         }
         System.out.println(sum);
     }
+    public static void wangyi_1(){
+        Scanner in = new Scanner(System.in);
+        int n=in.nextInt();
+        int k=in.nextInt();
+        int[] score=new int[n];
+        int[] sleep=new int[n];
+        for(int i=0;i<n;i++){
+            score[i]=in.nextInt();
+        }
+        for(int i=0;i<n;i++){
+            sleep[i]=in.nextInt();
+        }
+        long max=Integer.MIN_VALUE;
+
+        for(int i=0;i<n;i++){
+            long sum=0;
+            if(sleep[i]==0){
+                for(int j=0;j<k;j++){
+
+                    if(j+i<n&&sleep[j+i]==0){
+                        sum+=score[j+i];
+                    }
+
+                }
+                max=Math.max(sum,max);
+            }
+        }
+        for(int i=0;i<n;i++){
+            if(sleep[i]==1){
+                max+=score[i];
+            }
+        }
+        System.out.println(max);
+    }
+    public static void wangyi_2(){
+        Scanner in = new Scanner(System.in);
+        int n=in.nextInt();
+        int[] apple=new int[n];
+        long[] sum=new long[n];
+        apple[0]=in.nextInt();
+        long temp=apple[0];
+        sum[0]=temp;
+        for(int i=1;i<n;i++){
+            apple[i]=in.nextInt();
+            temp+=apple[i];
+            sum[i]=temp;
+        }
+        int m=in .nextInt();
+        int[] query=new int[m];
+        for(int i=0;i<m;i++){
+            long whichOne=in.nextInt();
+            System.out.println(twoSplit(whichOne,sum)+1);
+
+        }
+
+
+    }
+    public static int twoSplit(long query ,long[] apple){
+        if(query<apple[0]){
+            return 0;
+        }
+        if (query<apple[apple.length-1]&&query>apple[apple.length-2]){
+            return apple.length-1;
+        }
+        int low=0;
+        int high=apple.length-1;
+        int mid;
+
+        while(low<high){
+            mid=low+(high-low)/2;
+
+            if(apple[mid]==query){
+                return mid;
+            }
+            if(apple[mid]<query&&apple[mid+1]>query){
+                return mid+1;
+            }
+            if(apple[mid]>query&&apple[mid-1]<query){
+                return mid;
+            }
+            if(apple[mid]<query){
+                low=mid+1;
+            }
+            if(apple[mid]>query){
+                high=mid;
+            }
+
+
+        }
+        return 0;
+    }
+
+    public static void wangyi_3(){
+        Scanner in = new Scanner(System.in);
+        int n=in.nextInt();
+        int m=in.nextInt();
+        long k=in.nextLong();
+        sovle(n,m,k);
+        System.out.println(answer.toString());
+
+    }
+    public static StringBuilder answer=new StringBuilder();
+    public static void sovle(int n,int m,long k){
+        if(k==1){
+            if(n==1){
+                answer.append('a');
+                return;
+            }
+            if(m==1){
+                answer.append('z');
+                return;
+            }
+            return;
+        }
+        if(k>computeC(n+m-1,n-1)){
+            answer.append('z');
+            sovle(n,m-1,k-computeC(n+m,n));
+
+        }else {
+            answer.append('a');
+            sovle(n-1,m,k );
+        }
+        return;
+    }
+    public static long computeC(int up,int down){
+        System.out.println(computeGan(up,down+1)/computeGan(down,1));
+        return computeGan(up,down+1)/computeGan(down,1);
+
+
+    }
+    public static long computeGan(int up,int down){
+        long sum=1;
+        for(int i=down;i<=up;i++){
+            sum*=i;
+        }
+        return sum;
+    }
+
+
 }
 /*
 
@@ -203,4 +345,13 @@ public class Main {
 0 1 2
 2 1 0
 1 2 3
+
+
+
+
+
+5
+2 7 3 4 9
+3
  */
+
