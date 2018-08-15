@@ -1358,7 +1358,275 @@ Explanation: In this case, no transaction is done, i.e. max profit = 0.
 
 #### 思路
 
- 
+- https://www.jiuzhang.com/solution/best-time-to-buy-and-sell-stock-iii/
+
+- https://blog.csdn.net/liuchonge/article/details/73274871
+
+- 买卖股票系列题目：http://www.cnblogs.com/grandyang/p/4280131.html
+
+- 看了3份题解才大概明白思路
+
+- 题目要求是，交易两次，每次交易只能持有一股，求最大利润
+  - 可以一般化思路，交易K次
+
+  - 这是一道状态累加的题目，不过是时间序列累加
+
+  - dp\[\]\[\],行对应交易次数，列对应输入的一维数组，也就总共价格天数
+
+  - 难点：
+
+  - 这里还要额外定义一个local\[\]\[\]，用来保存局部变量，并协助dp数组更新为最大值
+
+  - 所以状态的公式
+
+  - ```
+           l[i][j] = max(g[i - 1][j - 1] + max(diff, 0), l[i - 1][j] + diff);
+           g[i][j] = max(l[i][j], g[i - 1][j]);
+       ```
+    ```
+  
+    ```
+
+- 全部代码，短小精悍
+
+  - ```c++
+    //version1
+    class Solution {
+    public:
+        int maxProfit(vector<int> &prices) {
+            if (prices.empty()) return 0;
+            int n = prices.size(), g[n][3] = {0}, l[n][3] = {0};
+            for (int i = 1; i < prices.size(); ++i) {
+                int diff = prices[i] - prices[i - 1];
+                for (int j = 1; j <= 2; ++j) {
+                    l[i][j] = max(g[i - 1][j - 1] + max(diff, 0), l[i - 1][j] + diff);
+                    g[i][j] = max(l[i][j], g[i - 1][j]);
+                }
+            }
+            return g[n - 1][2];
+        }
+    };
+    //二维压缩成一维。只是一行一行的更新
+    //version2
+    class Solution {
+    public:
+        int maxProfit(vector<int> &prices) {
+            if (prices.empty()) return 0;
+            int g[3] = {0};
+            int l[3] = {0};
+            for (int i = 0; i < prices.size() - 1; ++i) {
+                int diff = prices[i + 1] - prices[i];
+                for (int j = 2; j >= 1; --j) {
+                    l[j] = max(g[j - 1] + max(diff, 0), l[j] + diff);
+                    g[j] = max(l[j], g[j]);
+                }
+            }
+            return g[2];
+        }
+    };
+    ```
+
+    
+
+#### 782. [Transform to Chessboard](https://leetcode.com/problems/transform-to-chessboard/discuss/114847/Easy-and-Concise-Solution-with-Explanation-C++JavaPython) 
+
+An N x N `board` contains only `0`s and `1`s. In each move, you can swap any 2 rows with each other, or any 2 columns with each other.
+
+What is the minimum number of moves to transform the board into a "chessboard" - a board where no `0`s and no `1`s are 4-directionally adjacent? If the task is impossible, return -1.
+
+```
+Examples:
+Input: board = [[0,1,1,0],[0,1,1,0],[1,0,0,1],[1,0,0,1]]
+Output: 2
+Explanation:
+One potential sequence of moves is shown below, from left to right:
+
+0110     1010     1010
+0110 --> 1010 --> 0101
+1001     0101     1010
+1001     0101     0101
+
+The first move swaps the first and second column.
+The second move swaps the second and third row.
+
+
+Input: board = [[0, 1], [1, 0]]
+Output: 0
+Explanation:
+Also note that the board with 0 in the top left corner,
+01
+10
+
+is also a valid chessboard.
+
+Input: board = [[1, 0], [1, 0]]
+Output: -1
+Explanation:
+No matter what sequence of moves you make, you cannot end with a valid chessboard.
+```
+
+**Note:**
+
+- `board` will have the same number of rows and columns, a number in the range `[2, 30]`.
+- `board[i][j]` will be only `0`s or `1`s.
+
+#### 思路
+
+- 给一个01矩阵，要求变换成黑白棋盘的矩阵。0代表黑色，1代表白色。给出最少的交换步骤，否则返回-1
+- 这个题目目前网络上的题解，也讲不出一个所以然
+- 目前只是要求，只要符合黑白棋盘的两个条件就行
+  - 每一行只有偶数个0和1
+  - 每个矩阵的形式，应该是4个0，或者4个1，或者2个0和2个1
+- 验证完成两个条件，再直接计算列和行求和，相加除以2即可
+- 这个题目启发性不大
+
+
+
+
+
+  #### 154. Find Minimum in Rotated Sorted Array II 
+
+  Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand.
+
+(i.e.,  `[0,1,2,4,5,6,7]` might become  `[4,5,6,7,0,1,2]`).
+
+Find the minimum element.
+
+The array may contain duplicates.
+
+**Example 1:**
+
+```
+Input: [1,3,5]
+Output: 1
+```
+
+**Example 2:**
+
+```
+Input: [2,2,2,0,1]
+Output: 0
+```
+
+**Note:**
+
+- This is a follow up problem to [Find Minimum in Rotated Sorted Array](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/description/).
+- Would allow duplicates affect the run-time complexity? How and why?
+
+  #### 思路
+
+- 这道题是要你在旋转数组中最小的那个元素。
+- 因为是排好序的旋转数组，所以要考虑二分法
+- 正常的二分是右边大于左边，那么就反过来思考，如果不要右边大于左边，那么就有可能是最小的元素
+- 难点：
+  - 里面有重复的元素
+  - 面对重复的元素，只需要跳过这个元素，用下一位的元素作为边界，在新的数组继续二分就行了
+
+
+
+#### 42. [Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water/description/) 
+
+Given *n* non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it is able to trap after raining.
+
+![img](http://www.leetcode.com/static/images/problemset/rainwatertrap.png)
+The above elevation map is represented by array [0,1,0,2,1,0,1,3,2,1,2,1]. In this case, 6 units of rain water (blue section) are being trapped. **Thanks Marcos**for contributing this image!
+
+**Example:**
+
+```
+Input: [0,1,0,2,1,0,1,3,2,1,2,1]
+Output: 6
+```
+
+#### 思路
+
+- 从左和右两头靠近中间
+
+- 但是原理我搞不清楚，为什么能这样做
+
+- ```c++
+  class Solution {
+  public:
+      int trap(int A[], int n) {
+          int left=0; int right=n-1;
+          int res=0;
+          int maxleft=0, maxright=0;
+          while(left<=right){
+              if(A[left]<=A[right]){
+                  if(A[left]>=maxleft) maxleft=A[left];
+                  else res+=maxleft-A[left];
+                  left++;
+              }
+              else{
+                  if(A[right]>=maxright) maxright= A[right];
+                  else res+=maxright-A[right];
+                  right--;
+              }
+          }
+          return res;
+      }
+  };
+  ```
+
+
+
+
+
+#### 128. [Longest Consecutive Sequence](https://leetcode.com/problems/longest-consecutive-sequence/discuss/) 
+
+Given an unsorted array of integers, find the length of the longest consecutive elements sequence.
+
+Your algorithm should run in O(*n*) complexity.
+
+**Example:**
+
+```
+Input: [100, 4, 200, 1, 3, 2]
+Output: 4
+Explanation: The longest consecutive elements sequence is [1, 2, 3, 4]. Therefore its length is 4.
+```
+
+
+
+#### 思路
+
+- https://leetcode.com/problems/longest-consecutive-sequence/discuss/41055/My-really-simple-Java-O(n)-solution-Accepted
+- 有点像并查集的思路，用hashmap
+- 遍历数组
+  - 如果map没有的话，查该数的-1，+1两个数，并返回value
+  - value全部相加然后再加1,也就是当前的数
+  - put 当前的数，和相加之后的和
+  - 同时更新全局的Max数
+  - 再更新左右两个数
+
+
+
+#### 689. Maximum Sum of 3 Non-Overlapping Subarrays 
+
+In a given array `nums` of positive integers, find three non-overlapping subarrays with maximum sum.
+
+Each subarray will be of size `k`, and we want to maximize the sum of all `3*k` entries.
+
+Return the result as a list of indices representing the starting position of each interval (0-indexed). If there are multiple answers, return the lexicographically smallest one.
+
+**Example:**
+
+```
+Input: [1,2,1,2,6,7,5,1], 2
+Output: [0, 3, 5]
+Explanation: Subarrays [1, 2], [2, 6], [7, 5] correspond to the starting indices [0, 3, 5].
+We could have also taken [2, 1], but an answer of [1, 3, 5] would be lexicographically larger.
+```
+
+**Note:**
+
+`nums.length` will be between 1 and 20000.
+
+`nums[i]` will be between 1 and 65535.
+
+`k` will be between 1 and floor(nums.length / 3).
+
+#### 思路
 
 
 
@@ -1366,3 +1634,102 @@ Explanation: In this case, no transaction is done, i.e. max profit = 0.
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+#### 54. [Spiral Matrix](https://leetcode.com/problems/spiral-matrix/description/) 
+
+Given a matrix of *m* x *n* elements (*m* rows, *n* columns), return all elements of the matrix in spiral order.
+
+**Example 1:**
+
+```
+Input:
+[
+ [ 1, 2, 3 ],
+ [ 4, 5, 6 ],
+ [ 7, 8, 9 ]
+]
+Output: [1,2,3,6,9,8,7,4,5]
+```
+
+**Example 2:**
+
+```
+Input:
+[
+  [1, 2, 3, 4],
+  [5, 6, 7, 8],
+  [9,10,11,12]
+]
+Output: [1,2,3,4,8,12,11,10,9,5,6,7]
+```
+
+#### 思路
+
+- 题目不难，我只是想看看更高超的解法
+
+- 定义方向数组，定义好边界
+
+- 然后把调节设置好，让循环自动转弯
+
+- ```
+  class Solution {
+      public List<Integer> spiralOrder(int[][] matrix) {
+          if (matrix == null || matrix.length == 0 || matrix[0].length == 0) return new LinkedList<Integer>();
+          ArrayList<Integer> res = new ArrayList<Integer>(matrix.length*matrix[0].length);
+          int[][] dir = {{0,1},{1,0},{0,-1},{-1,0}};
+          int w = matrix[0].length;
+          int h = matrix.length;
+          int i = 0; int j = -1; int d = 0; int consec = 0;
+          
+          for (int m = 0; m < matrix[0].length*matrix.length; m++) {
+              if ((d == 0 && consec == w)     ||
+                  (d == 1 && consec == h - 1) ||
+                  (d == 2 && consec == w - 1)) { d++; consec = 0; }
+              else if (d == 3 && consec == h - 2) {
+                  w -= 2; h -= 2; d = 0; consec = 0;
+              }
+              i += dir[d][0]; j += dir[d][1]; res.add(matrix[i][j]); consec++;
+          }
+          return res;
+      }
+  }
+  ```
+
+
+
+
+
+#### 15. 3Sum 
+
+Given an array `nums` of *n* integers, are there elements *a*, *b*, *c* in `nums` such that *a* + *b* + *c* = 0? Find all unique triplets in the array which gives the sum of zero.
+
+**Note:**
+
+The solution set must not contain duplicate triplets.
+
+**Example:**
+
+```
+Given array nums = [-1, 0, 1, 2, -1, -4],
+
+A solution set is:
+[
+  [-1, 0, 1],
+  [-1, -1, 2]
+]
+```
+
+#### 思路
+
+- 
