@@ -9,7 +9,9 @@
 ## TODOLIST
 
 - [ ] 57
-- [ ] 
+- [ ] 768
+- [ ] 152 
+- [ ] 689 
 
 ## 算法思路归纳
 
@@ -1732,4 +1734,352 @@ A solution set is:
 
 #### 思路
 
+- https://kingsfish.github.io/2017/07/13/Leetcode-15-3Sum/
+- 遍历数组，每次遍历的时候把右边的数组当作2Sum来做
+
+
+
+#### 18. [4Sum](https://kingsfish.github.io/2017/07/13/Leetcode-18-4Sum/) 
+
+Given an array `nums` of *n* integers and an integer `target`, are there elements *a*, *b*, *c*, and *d* in `nums` such that *a* + *b* + *c* + *d* = `target`? Find all unique quadruplets in the array which gives the sum of `target`.
+
+**Note:**
+
+The solution set must not contain duplicate quadruplets.
+
+**Example:**
+
+```
+
+Given array nums = [1, 0, -1, 0, -2, 2], and target = 0.
+
+A solution set is:
+[
+  [-1,  0, 0, 1],
+  [-2, -1, 1, 2],
+  [-2,  0, 0, 2]
+]
+
+
+
+
+```
+
+#### 思路
+
+- 类似3Sum
+
+
+
+#### 152. [Maximum Product Subarray](https://leetcode.com/problems/maximum-product-subarray/description/) 
+
+Given an integer array `nums`, find the contiguous subarray within an array (containing at least one number) which has the largest product.
+
+**Example 1:**
+
+```
+Input: [2,3,-2,4]
+Output: 6
+Explanation: [2,3] has the largest product 6.
+```
+
+**Example 2:**
+
+```
+Input: [-2,0,-1]
+Output: 0
+Explanation: The result cannot be 2, because [-2,-1] is not a subarray.
+```
+
+#### 思路
+
+- http://www.cnblogs.com/grandyang/p/4028713.html
 - 
+
+
+
+
+
+## String
+
+### 思路总结
+
+- 字符串处理相关题目要从结构方面考虑
+- 是否对称，是否有某种规律
+- 多用java本身字符串的工具！
+
+### 题目
+
+#### 65. Valid Number 
+
+Validate if a given string is numeric.
+
+Some examples:
+`"0"` => `true`
+`" 0.1 "` => `true`
+`"abc"` => `false`
+`"1 a"` => `false`
+`"2e10"` => `true`
+
+**Note:** It is intended for the problem statement to be ambiguous. You should gather all requirements up front before implementing one.
+
+**Update (2015-02-10):**
+The signature of the `C++` function had been updated. If you still see your function signature accepts a `const char *` argument, please click the reload button to reset your code definition.
+
+#### 思路
+
+- 直接用java内置的解析函数
+
+
+
+
+
+#### 564. [Find the Closest Palindrome](https://leetcode.com/problems/find-the-closest-palindrome/description/) 
+
+Given an integer n, find the closest integer (not including itself), which is a palindrome.
+
+The 'closest' is defined as absolute difference minimized between two integers.
+
+**Example 1:**
+
+```
+Input: "123"
+Output: "121"
+```
+
+**Note:**
+
+1. The input **n** is a positive integer represented by string, whose length will not exceed 18.
+2. If there is a tie, return the smaller one as answer.
+
+#### 思路
+
+- http://www.cnblogs.com/grandyang/p/6915355.html
+- 这题不参考题解，真是想不到怎么找最接近的回文数字
+  - 本身是回文字符串
+    - 只需要对中间的数字进行加一或者减一，并加入后续数字的集合
+  - 本身不是回文字符串
+    - 要想产生最小的回文串，只有两种可能
+    - 一个是左半边对折到右边
+    - 另一个是右半边对折到左边
+    - 加入到候选列
+  - 循环找出最小的回文数字
+- 其实这个算法还有很多问题
+  - 比如99最小的应该是101，而不是88
+- 未完成待续
+
+
+
+#### 68. Text Justification 
+
+Given an array of words and a width *maxWidth*, format the text such that each line has exactly *maxWidth* characters and is fully (left and right) justified.
+
+You should pack your words in a greedy approach; that is, pack as many words as you can in each line. Pad extra spaces `' '` when necessary so that each line has exactly *maxWidth* characters.
+
+Extra spaces between words should be distributed as evenly as possible. If the number of spaces on a line do not divide evenly between words, the empty slots on the left will be assigned more spaces than the slots on the right.
+
+For the last line of text, it should be left justified and no **extra** space is inserted between words.
+
+**Note:**
+
+- A word is defined as a character sequence consisting of non-space characters only.
+- Each word's length is guaranteed to be greater than 0 and not exceed *maxWidth*.
+- The input array `words` contains at least one word.
+
+**Example 1:**
+
+```
+Input:
+words = ["This", "is", "an", "example", "of", "text", "justification."]
+maxWidth = 16
+Output:
+[
+   "This    is    an",
+   "example  of text",
+   "justification.  "
+]
+```
+
+**Example 2:**
+
+```
+Input:
+words = ["What","must","be","acknowledgment","shall","be"]
+maxWidth = 16
+Output:
+[
+  "What   must   be",
+  "acknowledgment  ",
+  "shall be        "
+]
+Explanation: Note that the last line is "shall be    " instead of "shall     be",
+             because the last line must be left-justified instead of fully-justified.
+             Note that the second line is also left-justified becase it contains only one word.
+```
+
+**Example 3:**
+
+```
+Input:
+words = ["Science","is","what","we","understand","well","enough","to","explain",
+         "to","a","computer.","Art","is","everything","else","we","do"]
+maxWidth = 20
+Output:
+[
+  "Science  is  what we",
+  "understand      well",
+  "enough to explain to",
+  "a  computer.  Art is",
+  "everything  else  we",
+  "do                  "
+]
+```
+
+#### 思路
+
+- https://www.tianmaying.com/tutorial/LC68
+- https://www.cnblogs.com/yrbbest/p/4436432.html
+- 感觉这道题目好没意思啊
+
+
+
+#### 44. Wildcard Matching 
+
+Given an input string (`s`) and a pattern (`p`), implement wildcard pattern matching with support for `'?'` and `'*'`.
+
+```
+'?' Matches any single character.
+'*' Matches any sequence of characters (including the empty sequence).
+```
+
+The matching should cover the **entire** input string (not partial).
+
+**Note:**
+
+- `s` could be empty and contains only lowercase letters `a-z`.
+- `p` could be empty and contains only lowercase letters `a-z`, and characters like `?` or `*`.
+
+**Example 1:**
+
+```
+Input:
+s = "aa"
+p = "a"
+Output: false
+Explanation: "a" does not match the entire string "aa".
+```
+
+**Example 2:**
+
+```
+Input:
+s = "aa"
+p = "*"
+Output: true
+Explanation: '*' matches any sequence.
+```
+
+**Example 3:**
+
+```
+Input:
+s = "cb"
+p = "?a"
+Output: false
+Explanation: '?' matches 'c', but the second letter is 'a', which does not match 'b'.
+```
+
+**Example 4:**
+
+```
+Input:
+s = "adceb"
+p = "*a*b"
+Output: true
+Explanation: The first '*' matches the empty sequence, while the second '*' matches the substring "dce".
+```
+
+**Example 5:**
+
+```
+Input:
+s = "acdcb"
+p = "a*c?b"
+Output: false
+```
+
+#### 思路
+
+- https://blog.csdn.net/qq508618087/article/details/51044029
+- https://blog.csdn.net/MebiuW/article/details/51165505
+
+#### 30. Substring with Concatenation of All Words 
+
+You are given a string, **s**, and a list of words, **words**, that are all of the same length. Find all starting indices of substring(s) in **s** that is a concatenation of each word in **words** exactly once and without any intervening characters.
+
+**Example 1:**
+
+```
+Input:
+  s = "barfoothefoobarman",
+  words = ["foo","bar"]
+Output: [0,9]
+Explanation: Substrings starting at index 0 and 9 are "barfoor" and "foobar" respectively.
+The output order does not matter, returning [9,0] is fine too.
+```
+
+**Example 2:**
+
+```
+Input:
+  s = "wordgoodstudentgoodword",
+  words = ["word","student"]
+Output: []
+```
+
+#### 思路
+
+- http://www.cnblogs.com/grandyang/p/4521224.html
+- http://www.cnblogs.com/yrbbest/p/4435166.html
+
+
+
+
+
+
+
+#### 273. Integer to English Words 
+Convert a non-negative integer to its english words representation. Given input is guaranteed to be less than 231 - 1.
+
+**Example 1:**
+
+```
+Input: 123
+Output: "One Hundred Twenty Three"
+```
+
+**Example 2:**
+
+```
+Input: 12345
+Output: "Twelve Thousand Three Hundred Forty Five"
+```
+
+**Example 3:**
+
+```
+Input: 1234567
+Output: "One Million Two Hundred Thirty Four Thousand Five Hundred Sixty Seven"
+```
+
+**Example 4:**
+
+```
+Input: 1234567891
+Output: "One Billion Two Hundred Thirty Four Million Five Hundred Sixty Seven Thousand Eight Hundred Ninety One"
+```
+
+#### 思路
+
+- http://www.cnblogs.com/grandyang/p/4772780.html
+- https://www.cnblogs.com/yrbbest/p/5031682.html
