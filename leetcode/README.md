@@ -2083,3 +2083,105 @@ Output: "One Billion Two Hundred Thirty Four Million Five Hundred Sixty Seven Th
 
 - http://www.cnblogs.com/grandyang/p/4772780.html
 - https://www.cnblogs.com/yrbbest/p/5031682.html
+
+
+
+
+
+#### 32. [Longest Valid Parentheses](https://leetcode.com/problems/longest-valid-parentheses/discuss/) 
+
+Given a string containing just the characters `'('` and `')'`, find the length of the longest valid (well-formed) parentheses substring.
+
+**Example 1:**
+
+```
+Input: "(()"
+Output: 2
+Explanation: The longest valid parentheses substring is "()"
+```
+
+**Example 2:**
+
+```
+Input: ")()())"
+Output: 4
+Explanation: The longest valid parentheses substring is "()()"
+```
+
+#### 思路
+
+- http://www.cnblogs.com/grandyang/p/4424731.html
+
+
+
+#### 10. Regular Expression Matching 
+
+Given an input string (`s`) and a pattern (`p`), implement regular expression matching with support for `'.'` and `'*'`.
+
+```
+'.' Matches any single character.
+'*' Matches zero or more of the preceding element.
+```
+
+The matching should cover the **entire** input string (not partial).
+
+**Note:**
+
+- `s` could be empty and contains only lowercase letters `a-z`.
+- `p` could be empty and contains only lowercase letters `a-z`, and characters like `.` or `*`.
+
+**Example 1:**
+
+```
+Input:
+s = "aa"
+p = "a"
+Output: false
+Explanation: "a" does not match the entire string "aa".
+```
+
+**Example 2:**
+
+```
+Input:
+s = "aa"
+p = "a*"
+Output: true
+Explanation: '*' means zero or more of the precedeng element, 'a'. Therefore, by repeating 'a' once, it becomes "aa".
+```
+
+**Example 3:**
+
+```
+Input:
+s = "ab"
+p = ".*"
+Output: true
+Explanation: ".*" means "zero or more (*) of any character (.)".
+```
+
+**Example 4:**
+
+```
+Input:
+s = "aab"
+p = "c*a*b"
+Output: true
+Explanation: c can be repeated 0 times, a can be repeated 1 time. Therefore it matches "aab".
+```
+
+**Example 5:**
+
+```
+Input:
+s = "mississippi"
+p = "mis*is*p*."
+Output: false
+```
+
+#### 思路
+
+- http://www.cnblogs.com/grandyang/p/4461713.html
+
+
+
