@@ -12,6 +12,7 @@
 - [ ] 768
 - [ ] 152 
 - [ ] 689 
+- [ ] 591
 
 ## 算法思路归纳
 
@@ -2185,3 +2186,391 @@ Output: false
 
 
 
+#### 214. Shortest Palindrome 
+
+Given a string **\*s***, you are allowed to convert it to a palindrome by adding characters in front of it. Find and return the shortest palindrome you can find by performing this transformation.
+
+**Example 1:**
+
+```
+Input: "aacecaaa"
+Output: "aaacecaaa"
+```
+
+**Example 2:**
+
+```
+Input: "abcd"
+Output: "dcbabcd"
+```
+
+#### 思路
+
+- 参考思路：https://www.cnblogs.com/yrbbest/p/4982859.html
+- 给一个字符串，返回最短的回文字符串。如果不是回文字符串，自己添加字符到原字符串即可
+- 解法一
+
+  - kmp思路
+- 解法二
+
+  - Suffix Array思路
+  - 分别计算字符串的正向和反向的前缀数组
+  - 然后遍历比较即可，记录相等前缀的最长长度
+  - 其余的字符串反向即可
+- 解法三
+  - 双向指针
+  - 直接一个头一个尾往中间移动比较字符串
+  - 相比解法二，用两个指针替代了。节省空间
+
+
+
+#### 97. [Interleaving String](https://leetcode.com/problems/interleaving-string/description/) 
+
+Given *s1*, *s2*, *s3*, find whether *s3* is formed by the interleaving of *s1* and *s2*.
+
+**Example 1:**
+
+```
+Input: s1 = "aabcc", s2 = "dbbca", s3 = "aadbbcbcac"
+Output: true
+```
+
+**Example 2:**
+
+```
+Input: s1 = "aabcc", s2 = "dbbca", s3 = "aadbbbaccc"
+Output: false
+```
+
+#### 思路
+
+- 参考思路
+  - http://www.cnblogs.com/grandyang/p/4298664.html
+- 如何判断s3是由s2和s1相互交错而成的
+- 解法一
+  - dp
+  - 行存放s1，列存放s2，内容存放true或false
+  - s3当前的位置，由同一列的上一行或者同一行的上一列决定
+  - 如果前置条件是true同时当前也可以匹配才能是true
+- 解法二
+  - dfs
+  - 感觉很烦的解法
+
+
+
+#### 336. [Palindrome Pairs](https://leetcode.com/problems/palindrome-pairs/description/) 
+
+Given a list of **unique** words, find all pairs of **distinct** indices `(i, j)` in the given list, so that the concatenation of the two words, i.e. `words[i] + words[j]` is a palindrome.
+
+**Example 1:**
+
+```
+Input: ["abcd","dcba","lls","s","sssll"]
+Output: [[0,1],[1,0],[3,2],[2,4]] 
+Explanation: The palindromes are ["dcbaabcd","abcddcba","slls","llssssll"]
+```
+
+**Example 2:**
+
+```
+Input: ["bat","tab","cat"]
+Output: [[0,1],[1,0]] 
+Explanation: The palindromes are ["battab","tabbat"]
+```
+
+#### 思路
+
+- 任意拼接两个字符串，如果是回文字符串，那么就作为回文字符串对
+- 暴力法行不通
+- 参考链接
+  - http://www.cnblogs.com/grandyang/p/5272039.html
+  - https://leetcode.com/problems/palindrome-pairs/discuss/79210/The-Easy-to-unserstand-JAVA-Solution
+- 解法一
+  - 列出可能出现的四种情况
+  - 空字符串
+  - 本身就回文
+  - 长度为奇数的回文，但是回文的中心位置在末尾
+  - 长度为奇数的回文，但是回文的中心位置在起始
+  - 四次遍历
+
+#### 76. [Minimum Window Substring](https://leetcode.com/problems/minimum-window-substring/description/)
+
+Given a string S and a string T, find the minimum window in S which will contain all the characters in T in complexity O(n).
+
+**Example:**
+
+```
+Input: S = "ADOBECODEBANC", T = "ABC"
+Output: "BANC"
+```
+
+**Note:**
+
+- If there is no such window in S that covers all characters in T, return the empty string `""`.
+- If there is such window, you are guaranteed that there will always be only one unique minimum window in S.
+
+#### 思路
+
+- 找出S的最短子字符串，其中包含T字符串的字母就行
+- 个人解法
+  - 用两个指针，一头一尾，先移动尾巴，一直到包围T后
+  - 再移动头部，记录最短的长度就行
+  - 终止条件尾巴到最后一个元素，而头部到极限位置就行了
+
+#### 87. Scramble String 
+
+Given a string *s1*, we may represent it as a binary tree by partitioning it to two non-empty substrings recursively.
+
+Below is one possible representation of *s1* = `"great"`:
+
+```
+    great
+   /    \
+  gr    eat
+ / \    /  \
+g   r  e   at
+           / \
+          a   t
+```
+
+To scramble the string, we may choose any non-leaf node and swap its two children.
+
+For example, if we choose the node `"gr"` and swap its two children, it produces a scrambled string `"rgeat"`.
+
+```
+    rgeat
+   /    \
+  rg    eat
+ / \    /  \
+r   g  e   at
+           / \
+          a   t
+```
+
+We say that `"rgeat"` is a scrambled string of `"great"`.
+
+Similarly, if we continue to swap the children of nodes `"eat"` and `"at"`, it produces a scrambled string `"rgtae"`.
+
+```
+    rgtae
+   /    \
+  rg    tae
+ / \    /  \
+r   g  ta  e
+       / \
+      t   a
+```
+
+We say that `"rgtae"` is a scrambled string of `"great"`.
+
+Given two strings *s1* and *s2* of the same length, determine if *s2* is a scrambled string of *s1*.
+
+**Example 1:**
+
+```
+Input: s1 = "great", s2 = "rgeat"
+Output: true
+```
+
+**Example 2:**
+
+```
+Input: s1 = "abcde", s2 = "caebd"
+Output: false
+```
+
+#### 思路
+
+- 题目不太懂
+
+- 参考链接
+
+  - https://leetcode.com/problems/scramble-string/discuss/29387/Accepted-Java-solution
+
+- 参考代码
+
+  - ```
+        public boolean isScramble(String s1, String s2) {
+            if(s1 == null || s2 == null) return false;
+            if(s1.equals(s2)) return true;
+            if(s1.length()!=s2.length()) return false;
+            
+            int[] letters = new int[26];
+            int len = s1.length();
+            for(int i = 0; i < len; i++){
+                letters[s1.charAt(i)-'a']++;
+                letters[s2.charAt(i)-'a']--;
+            }
+            for(int i = 0; i < 26; i++){
+                if(letters[i]!= 0) return false;
+            }
+            
+            for(int i = 1; i < len; i++){
+                if(isScramble(s1.substring(0,i), s2.substring(0,i)) && isScramble(s1.substring(i), s2.substring(i))) return true;
+                if(isScramble(s1.substring(0,i), s2.substring(len-i)) && isScramble(s1.substring(i), s2.substring(0,len-i))) return true;
+            }
+            return false;
+        }
+    }
+    ```
+
+
+
+#### 591. Tag Validator 
+
+Given a string representing a code snippet, you need to implement a tag validator to parse the code and return whether it is valid. A code snippet is valid if all the following rules hold:
+
+1. The code must be wrapped in a **valid closed tag**. Otherwise, the code is invalid.
+2. A **closed tag** (not necessarily valid) has exactly the following format : `<TAG_NAME>TAG_CONTENT</TAG_NAME>`. Among them, `<TAG_NAME>` is the start tag, and `</TAG_NAME>` is the end tag. The TAG_NAME in start and end tags should be the same. A closed tag is **valid** if and only if the TAG_NAME and TAG_CONTENT are valid.
+3. A **valid** `TAG_NAME` only contain **upper-case letters**, and has length in range [1,9]. Otherwise, the `TAG_NAME` is **invalid**.
+4. A **valid** `TAG_CONTENT` may contain other **valid closed tags**, **cdata** and any characters (see note1) **EXCEPT** unmatched `<`, unmatched start and end tag, and unmatched or closed tags with invalid TAG_NAME. Otherwise, the `TAG_CONTENT` is **invalid**.
+5. A start tag is unmatched if no end tag exists with the same TAG_NAME, and vice versa. However, you also need to consider the issue of unbalanced when tags are nested.
+6. A `<` is unmatched if you cannot find a subsequent `>`. And when you find a `<` or `</`, all the subsequent characters until the next `>` should be parsed as TAG_NAME (not necessarily valid).
+7. The cdata has the following format : `<![CDATA[CDATA_CONTENT]]>`. The range of `CDATA_CONTENT` is defined as the characters between `<![CDATA[` and the **first subsequent** `]]>`.
+8. `CDATA_CONTENT` may contain **any characters**. The function of cdata is to forbid the validator to parse `CDATA_CONTENT`, so even it has some characters that can be parsed as tag (no matter valid or invalid), you should treat it as **regular characters**.
+
+**Valid Code Examples:**
+
+```
+Input: "<DIV>This is the first line <![CDATA[<div>]]></DIV>"
+
+Output: True
+
+Explanation: 
+
+The code is wrapped in a closed tag : <DIV> and </DIV>. 
+
+The TAG_NAME is valid, the TAG_CONTENT consists of some characters and cdata. 
+
+Although CDATA_CONTENT has unmatched start tag with invalid TAG_NAME, it should be considered as plain text, not parsed as tag.
+
+So TAG_CONTENT is valid, and then the code is valid. Thus return true.
+
+
+Input: "<DIV>>>  ![cdata[]] <![CDATA[<div>]>]]>]]>>]</DIV>"
+
+Output: True
+
+Explanation:
+
+We first separate the code into : start_tag|tag_content|end_tag.
+
+start_tag -> "<DIV>"
+
+end_tag -> "</DIV>"
+
+tag_content could also be separated into : text1|cdata|text2.
+
+text1 -> ">>  ![cdata[]] "
+
+cdata -> "<![CDATA[<div>]>]]>", where the CDATA_CONTENT is "<div>]>"
+
+text2 -> "]]>>]"
+
+
+The reason why start_tag is NOT "<DIV>>>" is because of the rule 6.
+The reason why cdata is NOT "<![CDATA[<div>]>]]>]]>" is because of the rule 7.
+```
+
+**Invalid Code Examples:**
+
+```
+Input: "<A>  <B> </A>   </B>"
+Output: False
+Explanation: Unbalanced. If "<A>" is closed, then "<B>" must be unmatched, and vice versa.
+
+Input: "<DIV>  div tag is not closed  <DIV>"
+Output: False
+
+Input: "<DIV>  unmatched <  </DIV>"
+Output: False
+
+Input: "<DIV> closed tags with invalid tag name  <b>123</b> </DIV>"
+Output: False
+
+Input: "<DIV> unmatched tags with invalid tag name  </1234567890> and <CDATA[[]]>  </DIV>"
+Output: False
+
+Input: "<DIV>  unmatched start tag <B>  and unmatched end tag </C>  </DIV>"
+Output: False
+```
+
+**Note:**
+
+1. For simplicity, you could assume the input code (including the **any characters** mentioned above) only contain `letters`, `digits`, `'<'`,`'>'`,`'/'`,`'!'`,`'['`,`']'` and `' '`.
+
+#### 思路
+
+
+
+#### 115. [Distinct Subsequences](https://leetcode.com/problems/distinct-subsequences/description/) 
+
+Given a string **S** and a string **T**, count the number of distinct subsequences of **S** which equals **T**.
+
+A subsequence of a string is a new string which is formed from the original string by deleting some (can be none) of the characters without disturbing the relative positions of the remaining characters. (ie, `"ACE"` is a subsequence of `"ABCDE"` while `"AEC"` is not).
+
+**Example 1:**
+
+```
+Input: S = "rabbbit", T = "rabbit"
+Output: 3
+Explanation:
+
+As shown below, there are 3 ways you can generate "rabbit" from S.
+(The caret symbol ^ means the chosen letters)
+
+rabbbit
+^^^^ ^^
+rabbbit
+^^ ^^^^
+rabbbit
+^^^ ^^^
+```
+
+**Example 2:**
+
+```
+Input: S = "babgbag", T = "bag"
+Output: 5
+Explanation:
+
+As shown below, there are 5 ways you can generate "bag" from S.
+(The caret symbol ^ means the chosen letters)
+
+babgbag
+^^ ^
+babgbag
+^^    ^
+babgbag
+^    ^^
+babgbag
+  ^  ^^
+babgbag
+    ^^^
+```
+
+ 
+
+#### 思路
+
+
+
+
+
+
+
+#### 思路
+
+
+
+
+
+
+
+思路
+
+
+
+
+
+思路
