@@ -2553,24 +2553,207 @@ babgbag
 
 #### 思路
 
+- 个人解法：dp
+
+  - 行代表S，列代表T，内容代表能匹配的个数
+  - 每一个内容的位置如果匹配要加上前一列的内容并加1，否则直接加上前一列。然后还要加上上一行的内容。否则不加。
+
+- 正确解法
+
+  - 其实上述解法已经接近正确答案了。
+
+  - 递推方面，想要对第一行和第一列做初始化
+
+  - 然后从左向右推进的时候，要考虑是否匹配，如果不匹配可以直接赋值上一列，如果匹配就还要加上上一列上一行位置的次数即可。
+
+  - ```
+    class Solution {
+    public:
+        int numDistinct(string s, string t) {
+            int m = t.length(), n = s.length();
+            vector<vector<int>> dp(m + 1, vector<int> (n + 1, 0));
+            for (int j = 0; j <= n; j++) dp[0][j] = 1;
+            for (int j = 1; j <= n; j++)
+                for (int i = 1; i <= m; i++)
+                    dp[i][j] = dp[i][j - 1] + (t[i - 1] == s[j - 1] ? dp[i - 1][j - 1] : 0);
+            return dp[m][n];
+        }
+    };  
+    ```
 
 
 
+#### 72. [Edit Distance](https://leetcode.com/problems/edit-distance/description/) 
+
+Given two words *word1* and *word2*, find the minimum number of operations required to convert *word1* to *word2*.
+
+You have the following 3 operations permitted on a word:
+
+1. Insert a character
+2. Delete a character
+3. Replace a character
+
+**Example 1:**
+
+```
+Input: word1 = "horse", word2 = "ros"
+Output: 3
+Explanation: 
+horse -> rorse (replace 'h' with 'r')
+rorse -> rose (remove 'r')
+rose -> ros (remove 'e')
+```
+
+**Example 2:**
+
+```
+Input: word1 = "intention", word2 = "execution"
+Output: 5
+Explanation: 
+intention -> inention (remove 't')
+inention -> enention (replace 'i' with 'e')
+enention -> exention (replace 'n' with 'x')
+exention -> exection (replace 'n' with 'c')
+exection -> execution (insert 'u')
+```
+
+#### 思路
+
+- dp
+  - https://www.cnblogs.com/higerzhang/p/4098614.html
+  - 三种情况
+  - 行代表WORD1，列代表WORD2,内容代表距离
+  - 只有2比1短的时候需要添加字符串，只有2比1长的时候需要减少字符串
+  - 所以第一行和第一列可以直接初始化
+  - 剩下的根据三种情况直接找最短的距离，三个位置，左上角，上方和左方
+  - 相等的情况直接等于左上角
 
 
+
+#### 730. Count Different Palindromic Subsequences 
+
+Given a string S, find the number of different non-empty palindromic subsequences in S, and **return that number modulo 10^9 + 7.**
+
+A subsequence of a string S is obtained by deleting 0 or more characters from S.
+
+A sequence is palindromic if it is equal to the sequence reversed.
+
+Two sequences `A_1, A_2, ...` and `B_1, B_2, ...` are different if there is some `i` for which `A_i != B_i`.
+
+**Example 1:**
+
+```
+Input: 
+S = 'bccb'
+Output: 6
+Explanation: 
+The 6 different non-empty palindromic subsequences are 'b', 'c', 'bb', 'cc', 'bcb', 'bccb'.
+Note that 'bcb' is counted only once, even though it occurs twice.
+```
+
+**Example 2:**
+
+```
+Input: 
+S = 'abcdabcdabcdabcdabcdabcdabcdabcddcbadcbadcbadcbadcbadcbadcbadcba'
+Output: 104860361
+Explanation: 
+There are 3104860382 different non-empty palindromic subsequences, which is 104860361 modulo 10^9 + 7.
+```
+
+**Note:**
+
+The length of `S` will be in the range `[1, 1000]`.
+
+Each character `S[i]` will be in the set `{'a', 'b', 'c', 'd'}`.
+
+#### 思路
+
+- 找出字符串有多少种回文字符串
+- 参考链接：http://www.cnblogs.com/grandyang/p/7942040.html
+
+
+
+#### 899. Orderly Queue 
 
 #### 思路
 
 
 
+#### 632. [Smallest Range](https://leetcode.com/problems/smallest-range/description/) 
+
+You have `k` lists of sorted integers in ascending order. Find the **smallest** range that includes at least one number from each of the `k`lists.
+
+We define the range [a,b] is smaller than range [c,d] if `b-a < d-c` or `a < c` if `b-a == d-c`.
+
+**Example 1:**
+
+```
+Input:[[4,10,15,24,26], [0,9,12,20], [5,18,22,30]]
+Output: [20,24]
+Explanation: 
+List 1: [4, 10, 15, 24,26], 24 is in range [20,24].
+List 2: [0, 9, 12, 20], 20 is in range [20,24].
+List 3: [5, 18, 22, 30], 22 is in range [20,24].
+```
+
+**Note:**
+
+1. The given list may contain duplicates, so ascending order means >= here.
+2. 1 <= `k` <= 3500
+3. -105 <= `value of elements` <= 105.
+4. **For Java users, please note that the input type has been changed to List<List<Integer>>. And after you reset the code template, you'll see this point.**
+
+#### 思路
+
+
+
+#### 761. [Special Binary String](https://leetcode.com/problems/special-binary-string/description/) 
+
+*Special* binary strings are binary strings with the following two properties:
+
+The number of 0's is equal to the number of 1's.
+
+Every prefix of the binary string has at least as many 1's as 0's.
+
+Given a special string `S`, a *move* consists of choosing two consecutive, non-empty, special substrings of `S`, and swapping them. *(Two strings are consecutive if the last character of the first string is exactly one index before the first character of the second string.)*
+
+At the end of any number of moves, what is the lexicographically largest resulting string possible?
+
+**Example 1:**
+
+```
+Input: S = "11011000"
+Output: "11100100"
+Explanation:
+The strings "10" [occuring at S[1]] and "1100" [at S[3]] are swapped.
+This is the lexicographically largest string possible after some number of swaps.
+```
+
+**Note:**
+
+1. `S` has length at most `50`.
+2. `S` is guaranteed to be a *special* binary string as defined above.
+
+#### 思路
+
+
+
+## Tree
+
+### 思路总结
+
+### 题目
 
 
 
 
-思路
 
 
 
+## Math
 
+### 思路总结
 
-思路
+### 题目
+

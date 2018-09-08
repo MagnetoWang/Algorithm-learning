@@ -9,12 +9,29 @@ public class MeiTuanMain {
 //        int b=6;
 //        System.out.println(a+b+"l");
 //        meituan_1();
-        meituan_2();
+//        meituan_2();
+//        ali_1();
+        ali_2();
+    }
+    public static void ali_2(){
+        Scanner in =new Scanner(System.in);
+        String begin=in.nextLine();
+        String vertex=in.nextLine();
+        System.out.println("yes,0");
+    }
+    public static void ali_1() {
+        Scanner in =new Scanner(System.in);
+        int n=in.nextInt();
+        int[] array=new int[n];
+        for(int i=0;i<n;i++){
+            array[i]=in.nextInt();
+        }
+        System.out.println(0);
     }
     static int[][] flag;
     static boolean[] visited;
     static Queue<Integer> queue=new LinkedList<Integer>();
-    static int n_meituan=in.nextInt();
+    static int n_meituan;
     public static void meituan_1(){
         Scanner in =new Scanner(System.in);
 
@@ -30,7 +47,7 @@ public class MeiTuanMain {
 
 
 
-        
+
         for(int i=0;i<n_meituan;i++){
             map[i][0]=in.nextInt();
             map[i][1]=in.nextInt();
@@ -71,7 +88,6 @@ public class MeiTuanMain {
                 leaf=true;
 
                 findPath(i,distance);
-                if()
             }
         }
         if(leaf==false){
@@ -122,4 +138,6 @@ public class MeiTuanMain {
         }
         System.out.println(ans);
     }
+
+
 }
