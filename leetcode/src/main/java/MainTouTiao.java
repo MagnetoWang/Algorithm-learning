@@ -1,11 +1,266 @@
+import java.math.BigInteger;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MainTouTiao {
     public static void main(String[] args) {
-//        un();
-        twoString();
-//        toutiao_2_1();
-//        toutiao_1();
+        zhuiyi_2();
+    }
+    public static void zhuiyi_1(){
+        Scanner sc = new Scanner(System.in);
+        String x=sc.nextLine();
+        String y=sc.nextLine();
+
+        System.out.println(new BigInteger(x).multiply(new BigInteger(y)));
+    }
+
+    /**
+     * abbaad
+     */
+    public static void zhuiyi_2(){
+        Scanner sc = new Scanner(System.in);
+        String line=sc.nextLine();
+        StringBuilder stringBuilder=new StringBuilder(line);
+        String[] head=zhuiyiHuiZhui(stringBuilder.toString());
+        String[] tail=zhuiyiHuiZhui(stringBuilder.reverse().toString());
+        int max=0;
+        int index=0;
+        int maxIndex=0;
+        for(int i=0;i<head.length;i++){
+
+            for(int k=0;k<tail.length;k++){
+                int sum=0;
+                for(int j=0;j<Math.min(head[i].length(),tail[k].length());j++){
+//                    System.out.println(head[i]);
+//                    System.out.println(tail[i]);
+                    if(head[i].charAt(j)==tail[k].charAt(j)){
+                        sum++;
+                        index=i;
+                    }else {
+                        break;
+                    }
+                }
+                if(max<sum){
+                    max=sum;
+                    maxIndex=index;
+                }
+
+            }
+
+        }
+
+        System.out.println(head[maxIndex].substring(0,max));
+
+        System.out.println(max);
+    }
+    public static String[] zhuiyiHuiZhui(String s){
+        String[] suffix=new String[s.length()];
+        for(int i=0;i<s.length();i++){
+            suffix[i]=s.substring(i);
+        }
+        return suffix;
+    }
+    //abc
+    //3
+    public static void toutiao_3_1(){
+        Scanner sc = new Scanner(System.in);
+        String line=sc.nextLine();
+        int max=0;
+        int sum=0;
+        Map<Character,Integer> pro=new HashMap<Character, Integer>();
+        int begin=0;
+        for(int i = 0; i < line.length(); ){
+            if(pro.containsKey(line.charAt(i))){
+
+                pro.remove(line.charAt(begin));
+                if(sum<max){
+                    sum=max;
+                }
+                begin++;
+                max--;
+            }else {
+                pro.put(line.charAt(i),1);
+                i++;
+                max++;
+            }
+        }
+        if(sum<max){
+            sum=max;
+        }
+        System.out.println(sum);
+    }
+
+    /**
+     * input
+     * 4
+     * 1 0 0 0
+     * 0 0 0 0
+     * 0 0 0 1
+     * 0 0 0 0
+     *output
+     * 2
+     *
+     *
+     * 4
+     * 1 1 1 1
+     * 0 0 0 0
+     * 1 1 0 0
+     * 0 0 1 1
+     */
+    public static void toutiao_3_2(){
+        Scanner sc = new Scanner(System.in);
+        int n=sc.nextInt();
+        apartment=new int[n][n];
+        for(int i = 0; i < n;i++){
+            for(int j = 0; j < n;j++){
+                apartment[i][j]=sc.nextInt();
+            }
+        }
+        for(int i = 0; i < n;i++){
+            for(int j = 0; j < n;j++){
+                if(i>=0&&i<n&&j>=0&&j<n&&apartment[i][j]==1){
+                    TeamSum++;
+                    apartment[i][j]=0;
+                    findTeam(i,j,n);
+                }
+            }
+        }
+        System.out.println(TeamSum);
+    }
+    static int[][] apartment;
+    static int TeamSum=0;
+    public static void findTeam(int x,int y,int n){
+        int xNew=x-1;
+        int yNew=y;
+        if(xNew>=0&&xNew<n&&yNew>=0&&yNew<n&&apartment[xNew][yNew]==1){
+//            TeamSum++;
+            apartment[xNew][yNew]=0;
+            findTeam(xNew,yNew,n);
+        }
+        xNew=x;
+        yNew=y-1;
+        if(xNew>=0&&xNew<n&&yNew>=0&&yNew<n&&apartment[xNew][yNew]==1){
+//            TeamSum++;
+            apartment[xNew][yNew]=0;
+            findTeam(xNew,yNew,n);
+        }
+        xNew=x+1;
+        yNew=y;
+        if(xNew>=0&&xNew<n&&yNew>=0&&yNew<n&&apartment[xNew][yNew]==1){
+//            TeamSum++;
+            apartment[xNew][yNew]=0;
+            findTeam(xNew,yNew,n);
+        }
+        xNew=x;
+        yNew=y+1;
+        if(xNew>=0&&xNew<n&&yNew>=0&&yNew<n&&apartment[xNew][yNew]==1){
+//            TeamSum++;
+            apartment[xNew][yNew]=0;
+            findTeam(xNew,yNew,n);
+        }
+    }
+
+    /**
+     * 55555555
+     * 555555559
+     * 255255255255
+     * 192255255255
+     *
+     * 100001
+     *
+     * 010000100000
+     *
+     * 000000000000
+     */
+    public static void toutiao_3_3(){
+        Scanner sc = new Scanner(System.in);
+        String line=sc.nextLine();
+        int ans=0;
+        if(line.length()>12){
+            System.out.println(0);
+            return;
+        }
+        if(line.length()==4){
+            System.out.println(1);
+            return;
+        }
+//        if(line.length()==5){
+//            System.out.println(4);
+//            return;
+//        }
+        if(line.length()>4) {
+            String IPADDRESS_PATTERN =
+                    "(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
+
+            Pattern pattern = Pattern.compile(IPADDRESS_PATTERN);
+            StringBuilder ip=new StringBuilder(line);
+            Matcher matcher = pattern.matcher(ip);
+            int sum=0;
+            int cout=0;
+            for(int i=1;i<line.length()-2;i++){
+                for (int j=i+1;j<line.length()-1;j++){
+                    for (int k=j+1;k<line.length();k++){
+                        ip.insert(k,".");
+                        ip.insert(j,".");
+                        ip.insert(i,".");
+                        cout++;
+
+
+                        if (matcherFind(ip.toString())) {
+                            System.out.println("ok : "+ip);
+                            sum++;
+                        }else {
+                            System.out.println("not ok : "+ip);
+                        }
+                        ip=new StringBuilder(line);
+                    }
+                }
+            }
+//            for(String e:ipSet){
+//                System.out.println(ipSet);
+//            }
+            System.out.println(ipSet);
+            System.out.println(ipSet.size());
+            System.out.println(sum);
+            System.out.println(cout);
+            return;
+        }
+
+    }
+    static Set<String> ipSet=new HashSet<String>();
+    public static boolean matcherFind(String ip){
+        String[] number=ip.split("\\.");
+//        System.out.println("find "+ip);
+        int i=1;
+        for(String e:number){
+//            System.out.println(e);
+            if(i==1){
+                i++;
+                if(Integer.valueOf(e)>192||Integer.valueOf(e)<0){
+                    return false;
+                }
+                continue;
+            }
+            if(Integer.valueOf(e)>255||Integer.valueOf(e)<0){
+                return false;
+            }
+        }
+        ipSet.add(String.valueOf(Integer.valueOf(number[0]))+"."+String.valueOf(Integer.valueOf(number[1]))+"."+String.valueOf(Integer.valueOf(number[2]))+"."+String.valueOf(Integer.valueOf(number[3])));
+        return true;
+    }
+    public static void toutiao_3_4(){
+        Scanner sc = new Scanner(System.in);
+        int n=sc.nextInt();
+        String line=sc.nextLine();
+        System.out.println(1);
+    }
+    public static void toutiao_3_5(){
+        Scanner sc = new Scanner(System.in);
+        int n=sc.nextInt();
+        int m=sc.nextInt();
+        String line=sc.nextLine();
+        System.out.println(1);
     }
     public static void twoString(){
         Scanner in = new Scanner(System.in);
