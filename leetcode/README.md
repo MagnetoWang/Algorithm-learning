@@ -3084,13 +3084,279 @@ as "[1,2,3,null,null,4,5]"
 
 #### 思路
 
+- http://www.cnblogs.com/grandyang/p/4913869.html
+
+
+
+#### 145. [Binary Tree Postorder Traversal](https://leetcode.com/problems/binary-tree-postorder-traversal/description/) 
+
+Given a binary tree, return the *postorder* traversal of its nodes' values.
+
+**Example:**
+
+```
+Input: [1,null,2,3]
+   1
+    \
+     2
+    /
+   3
+
+Output: [3,2,1]
+```
+
+**Follow up:** Recursive solution is trivial, could you do it iteratively?
+
+#### 思路
+
+- https://blog.csdn.net/yanglingwell/article/details/80994422
+- 
+
+
+
+#### 98. [Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/description/) 
+
+Given a binary tree, determine if it is a valid binary search tree (BST).
+
+Assume a BST is defined as follows:
+
+- The left subtree of a node contains only nodes with keys **less than** the node's key.
+- The right subtree of a node contains only nodes with keys **greater than** the node's key.
+- Both the left and right subtrees must also be binary search trees.
+
+**Example 1:**
+
+```
+Input:
+    2
+   / \
+  1   3
+Output: true
+```
+
+**Example 2:**
+
+```
+    5
+   / \
+  1   4
+     / \
+    3   6
+Output: false
+Explanation: The input is: [5,1,4,null,null,3,6]. The root node's value
+             is 5 but its right child's value is 4.
+```
+
+#### 思路
+
+- https://www.cnblogs.com/yrbbest/p/4437172.htmlhttps://www.cnblogs.com/yrbbest/p/4437172.html
+
+- ```Java
+  public class Solution {
+      TreeNode lastNode; 
+      public boolean isValidBST(TreeNode root) {
+          if(root == null)
+              return true;
+          if(!isValidBST(root.left))
+              return false;
+          if(lastNode != null && lastNode.val >= root.val)
+              return false;
+          lastNode = root;
+          if(!isValidBST(root.right))
+              return false;
+          return true;
+      }
+  }
+  ```
+
+
+
+
+
+#### 222. [Count Complete Tree Nodes](https://leetcode.com/problems/count-complete-tree-nodes/description/) 
+
+Given a **complete** binary tree, count the number of nodes.
+
+**Note:**
+
+**Definition of a complete binary tree from Wikipedia:**
+In a complete binary tree every level, except possibly the last, is completely filled, and all nodes in the last level are as far left as possible. It can have between 1 and 2h nodes inclusive at the last level h.
+
+**Example:**
+
+```
+Input: 
+    1
+   / \
+  2   3
+ / \  /
+4  5 6
+
+Output: 6
+```
+
+#### 思路
+
+- http://www.cnblogs.com/grandyang/p/4567827.html
+
+- ```
+  class Solution {
+  public:
+      int countNodes(TreeNode* root) {
+          int hLeft = 0, hRight = 0;
+          TreeNode *pLeft = root, *pRight = root;
+          while (pLeft) {
+              ++hLeft;
+              pLeft = pLeft->left;
+          }
+          while (pRight) {
+              ++hRight;
+              pRight = pRight->right;
+          }
+          if (hLeft == hRight) return pow(2, hLeft) - 1;
+          return countNodes(root->left) + countNodes(root->right) + 1;
+      }
+  };
+  ```
+
+
+
+#### 236. [Lowest Common Ancestor of a Binary Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/description/) 
+
+Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.
+
+According to the [definition of LCA on Wikipedia](https://en.wikipedia.org/wiki/Lowest_common_ancestor): “The lowest common ancestor is defined between two nodes p and q as the lowest node in T that has both p and q as descendants (where we allow **a node to be a descendant of itself**).”
+
+Given the following binary tree:  root = [3,5,1,6,2,0,8,null,null,7,4]
+
+```
+        _______3______
+       /              \
+    ___5__          ___1__
+   /      \        /      \
+   6      _2       0       8
+         /  \
+         7   4
+```
+
+**Example 1:**
+
+```
+Input: root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 1
+Output: 3
+Explanation: The LCA of of nodes 5 and 1 is 3.
+```
+
+**Example 2:**
+
+```
+Input: root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 4
+Output: 5
+Explanation: The LCA of nodes 5 and 4 is 5, since a node can be a descendant of itself
+             according to the LCA definition.
+```
+
+**Note:**
+
+- All of the nodes' values will be unique.
+- p and q are different and both values will exist in the binary tree.
+
+#### 思路
+
+- https://blog.csdn.net/Jeanphorn/article/details/46894663
+
+- ```c++
+  class Solution {
+  public:
+      TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+          if(root == NULL || root == p || root == q) return root;
+  
+          TreeNode *ltree = lowestCommonAncestor(root->left,p,q);
+          TreeNode *rtree = lowestCommonAncestor(root->right,p,q);
+  
+          if(ltree && rtree) return root;
+  
+          return ltree?ltree:rtree;
+      }
+  };
+  ```
+
+  
+
+
+
+#### 95. [Unique Binary Search Trees II](https://leetcode.com/problems/unique-binary-search-trees-ii/description/) 
+
+Given an integer *n*, generate all structurally unique **BST's** (binary search trees) that store values 1 ... *n*.
+
+**Example:**
+
+```
+Input: 3
+Output:
+[
+  [1,null,3,2],
+  [3,2,null,1],
+  [3,1,null,null,2],
+  [2,1,3],
+  [1,null,2,null,3]
+]
+Explanation:
+The above output corresponds to the 5 unique BST's shown below:
+
+   1         3     3      2      1
+    \       /     /      / \      \
+     3     2     1      1   3      2
+    /     /       \                 \
+   2     1         2                 3
+```
+
+#### 思路
+
+- http://www.cnblogs.com/grandyang/p/4301096.html
+
+- ```c++
+  class Solution {
+  public:
+      vector<TreeNode *> generateTrees(int n) {
+          if (n == 0) return {};
+          return *generateTreesDFS(1, n);
+      }
+      vector<TreeNode*> *generateTreesDFS(int start, int end) {
+          vector<TreeNode*> *subTree = new vector<TreeNode*>();
+          if (start > end) subTree->push_back(NULL);
+          else {
+              for (int i = start; i <= end; ++i) {
+                  vector<TreeNode*> *leftSubTree = generateTreesDFS(start, i - 1);
+                  vector<TreeNode*> *rightSubTree = generateTreesDFS(i + 1, end);
+                  for (int j = 0; j < leftSubTree->size(); ++j) {
+                      for (int k = 0; k < rightSubTree->size(); ++k) {
+                          TreeNode *node = new TreeNode(i);
+                          node->left = (*leftSubTree)[j];
+                          node->right = (*rightSubTree)[k];
+                          subTree->push_back(node);
+                      }
+                  }
+              }
+          }
+          return subTree;
+      }
+  };
+  ```
+
 
 
 思路
 
 
 
+
+
 思路
+
+
+
+
 
 
 
