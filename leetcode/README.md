@@ -746,12 +746,129 @@ Explanation: In this case, no transaction is done, i.e. max profit = 0.
 
 
 
-#### 188. Best Time to Buy and Sell Stock IV
+#### 188. [Best Time to Buy and Sell Stock IV](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/description/)
+
+Say you have an array for which the *i*th element is the price of a given stock on day *i*.
+
+Design an algorithm to find the maximum profit. You may complete at most **k** transactions.
+
+**Note:**
+You may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).
+
+**Example 1:**
+
+```
+Input: [2,4,1], k = 2
+Output: 2
+Explanation: Buy on day 1 (price = 2) and sell on day 2 (price = 4), profit = 4-2 = 2.
+```
+
+**Example 2:**
+
+```
+Input: [3,2,6,5,0,3], k = 2
+Output: 7
+Explanation: Buy on day 2 (price = 2) and sell on day 3 (price = 6), profit = 6-2 = 4.
+             Then buy on day 5 (price = 0) and sell on day 6 (price = 3), profit = 3-0 = 3.
+```
+
+
+
 #### 思路
 
-- 
+- 找出K次交易的最大利润，每次交易只能有一个股票
+
+- ```c++
+    class Solution {
+      public:
+          int maxProfit(int k, vector<int>& prices) {
+              int m = prices.size();
+              if(m==0 || m==1 || k == 0) return 0;
+              if (k>m/2){ // simple case
+                  int ans = 0;
+                  for (int i=1; i<m; ++i){
+                      ans += max(prices[i] - prices[i-1],0);
+                  }
+                  return ans;
+              }
+              vector<vector<int>> buy(k+1,vector<int>(m+1,0));
+              vector<vector<int>> sell(k+1,vector<int>(m+1,0));
+              vector<int> end(m+1,0);
+              for(int i=1;i<=k;i++)
+                  buy[i][0] = INT_MIN;
+              for(int i=1;i<=m;i++){
+                  for(int j=1;j<=k;j++){
+                      //for the first buy state, need to compare the current price with the previous price. sell[0][0] are all initialized with 0, then sell[0][0] - prices[i-1] is the price of current first buy state
+                      buy[j][i] = max(buy[j][i-1], sell[j-1][i-1] - prices[i-1]);
+                      sell[j][i] = max(buy[j][i-1]+prices[i-1],sell[j][i-1]);
+                  }
+              }
+              return sell[k][m];
+          }
+      };
+  ```
 
 
+
+#### 132. [Palindrome Partitioning II](https://leetcode.com/problems/palindrome-partitioning-ii/description/) 
+
+Given a string *s*, partition *s* such that every substring of the partition is a palindrome.
+
+Return the minimum cuts needed for a palindrome partitioning of *s*.
+
+**Example:**
+
+```
+Input: "aab"
+Output: 1
+Explanation: The palindrome partitioning ["aa","b"] could be produced using 1 cut.
+```
+
+#### 思路
+
+- 一个字符串切割多少次，可以切磋成所有的子字符串为回文字符串
+
+- https://www.cnblogs.com/zuoyuan/p/3758783.html
+
+- 看不懂解法可以看youtube视频手动推导
+
+- ```C++
+  class Solution {
+  public:
+      int minCut(string s) {
+          int n = s.size();
+          vector<int> cut(n+1, 0);  // number of cuts for the first k characters
+          for (int i = 0; i <= n; i++) cut[i] = i-1;
+          for (int i = 0; i < n; i++) {
+              for (int j = 0; i-j >= 0 && i+j < n && s[i-j]==s[i+j] ; j++) // odd length palindrome
+                  cut[i+j+1] = min(cut[i+j+1],1+cut[i-j]);
+  
+              for (int j = 1; i-j+1 >= 0 && i+j < n && s[i-j+1] == s[i+j]; j++) // even length palindrome
+                  cut[i+j+1] = min(cut[i+j+1],1+cut[i-j+1]);
+          }
+          return cut[n];
+      }
+  };
+  ```
+
+- ```python
+  class Solution:
+      # @param s, a string
+      # @return an integer
+      # @dfs time out
+      # @dp is how many palindromes in the word
+      def minCut(self, s):
+          dp = [0 for i in range(len(s)+1)]
+          p = [[False for i in range(len(s))] for j in range(len(s))]
+          for i in range(len(s)+1):
+              dp[i] = len(s) - i
+          for i in range(len(s)-1, -1, -1):
+              for j in range(i, len(s)):
+                  if s[i] == s[j] and (((j - i) < 2) or p[i+1][j-1]):
+                      p[i][j] = True
+                      dp[i] = min(1+dp[j+1], dp[i])
+          return dp[0]-1
+  ```
 
 
 
@@ -3346,7 +3463,83 @@ The above output corresponds to the 5 unique BST's shown below:
 
 
 
-思路
+#### 117. [Populating Next Right Pointers in Each Node II](https://leetcode.com/problems/populating-next-right-pointers-in-each-node-ii/description/)
+
+Given a binary tree
+
+```
+struct TreeLinkNode {
+  TreeLinkNode *left;
+  TreeLinkNode *right;
+  TreeLinkNode *next;
+}
+```
+
+Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to `NULL`.
+
+Initially, all next pointers are set to `NULL`.
+
+**Note:**
+
+- You may only use constant extra space.
+- Recursive approach is fine, implicit stack space does not count as extra space for this problem.
+
+**Example:**
+
+Given the following binary tree,
+
+```
+     1
+   /  \
+  2    3
+ / \    \
+4   5    7
+```
+
+After calling your function, the tree should look like:
+
+```
+     1 -> NULL
+   /  \
+  2 -> 3 -> NULL
+ / \    \
+4-> 5 -> 7 -> NULL
+```
+
+#### 思路
+
+- https://blog.csdn.net/qq508618087/article/details/50508030
+
+- ```java
+  class Solution {
+  public:
+      void connect(TreeLinkNode *root) {
+          TreeLinkNode *pHead = new TreeLinkNode(0), *pre = pHead;
+          while(root)
+          {
+              if(root->left)
+              {
+                  pre->next = root->left;
+                  pre = pre->next;
+              }
+              if(root->right)
+              {
+                  pre->next = root->right;
+                  pre = pre->next;
+              }
+              root = root->next;
+              if(!root)//如果到了一层的最后一个结点，就连接下一层的第一个结点
+              {
+                  pre = pHead;
+                  root = pHead->next;
+                  pHead->next = NULL;
+              }
+          }
+      }
+  };
+  ```
+
+  
 
 
 
