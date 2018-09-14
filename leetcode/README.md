@@ -778,7 +778,7 @@ Explanation: Buy on day 2 (price = 2) and sell on day 3 (price = 6), profit = 6-
 
 - 找出K次交易的最大利润，每次交易只能有一个股票
 
-- ```c++
+```c++
     class Solution {
       public:
           int maxProfit(int k, vector<int>& prices) {
@@ -806,197 +806,403 @@ Explanation: Buy on day 2 (price = 2) and sell on day 3 (price = 6), profit = 6-
               return sell[k][m];
           }
       };
+```
+
+
+
+
+
+
+
+
+
+#### 871. [Minimum Number of Refueling Stops](https://leetcode.com/problems/minimum-number-of-refueling-stops/description/)
+
+A car travels from a starting position to a destination which is `target` miles east of the starting position.
+
+Along the way, there are gas stations.  Each `station[i]` represents a gas station that is `station[i][0]` miles east of the starting position, and has `station[i][1]` liters of gas.
+
+The car starts with an infinite tank of gas, which initially has `startFuel` liters of fuel in it.  It uses 1 liter of gas per 1 mile that it drives.
+
+When the car reaches a gas station, it may stop and refuel, transferring all the gas from the station into the car.
+
+What is the least number of refueling stops the car must make in order to reach its destination?  If it cannot reach the destination, return `-1`.
+
+Note that if the car reaches a gas station with 0 fuel left, the car can still refuel there.  If the car reaches the destination with 0 fuel left, it is still considered to have arrived.
+
+ 
+
+**Example 1:**
+
+```
+Input: target = 1, startFuel = 1, stations = []
+Output: 0
+Explanation: We can reach the target without refueling.
+```
+
+**Example 2:**
+
+```
+Input: target = 100, startFuel = 1, stations = [[10,100]]
+Output: -1
+Explanation: We can't reach the target (or even the first gas station).
+```
+
+**Example 3:**
+
+```
+Input: target = 100, startFuel = 10, stations = [[10,60],[20,30],[30,30],[60,40]]
+Output: 2
+Explanation: 
+We start with 10 liters of fuel.
+We drive to position 10, expending 10 liters of fuel.  We refuel from 0 liters to 60 liters of gas.
+Then, we drive from position 10 to position 60 (expending 50 liters of fuel),
+and refuel from 10 liters to 50 liters of gas.  We then drive to and reach the target.
+We made 2 refueling stops along the way, so we return 2.
+```
+
+ 
+
+**Note:**
+
+1. `1 <= target, startFuel, stations[i][1] <= 10^9`
+2. `0 <= stations.length <= 500`
+3. `0 < stations[0][0] < stations[1][0] < ... < stations[stations.length-1][0] < target`
+
+
+
+#### 思路
+
+- https://blog.csdn.net/u011026968/article/details/81052040
+
+- https://leetcode.com/problems/minimum-number-of-refueling-stops/discuss/149839/DP-O(N2)-and-Priority-Queue-O(NlogN)
+
+- ```c++
+  class Solution {
+  public:
+      int minRefuelStops(int target, int startFuel, vector<vector<int>>& ss) {
+          // int dp[ss.size() + 1];
+          if (startFuel >= target) return 0;
+          if (ss.size() == 0) return startFuel >= target ? 0 : -1;
+          long long dp[ ss.size() + 1 ];
+          memset(dp, 0 , sizeof(dp));
+          dp[0] = startFuel;
+          int ret = INT_MAX;
+          
+          for (int i = 0; i < ss.size(); i++) {
+              int t = i+1;
+              for (t = i + 1; t >= 1; t--) {
+                  if (dp[t - 1] < ss[i][0]) continue;
+                  dp[t] = max(dp[t-1] + ss[i][1], dp[t]);
+                  if (dp[t] >= target) ret = min(t , ret);
+              }
+              
+          }
+          return ret == INT_MAX ? -1 : ret;
+      }
+  };
+  
   ```
 
+  
 
+#### 466. [Count The Repetitions](https://leetcode.com/problems/count-the-repetitions/description/)
 
-#### 132. [Palindrome Partitioning II](https://leetcode.com/problems/palindrome-partitioning-ii/description/) 
+Define `S = [s,n]` as the string S which consists of n connected strings s. For example, `["abc", 3]` ="abcabcabc".
 
-Given a string *s*, partition *s* such that every substring of the partition is a palindrome.
+On the other hand, we define that string s1 can be obtained from string s2 if we can remove some characters from s2 such that it becomes s1. For example, “abc” can be obtained from “abdbec” based on our definition, but it can not be obtained from “acbbe”.
 
-Return the minimum cuts needed for a palindrome partitioning of *s*.
+You are given two non-empty strings s1 and s2 (each at most 100 characters long) and two integers 0 ≤ n1 ≤ 106 and 1 ≤ n2 ≤ 106. Now consider the strings S1 and S2, where `S1=[s1,n1]` and `S2=[s2,n2]`. Find the maximum integer M such that `[S2,M]` can be obtained from `S1`.
 
 **Example:**
 
 ```
-Input: "aab"
-Output: 1
-Explanation: The palindrome partitioning ["aa","b"] could be produced using 1 cut.
+Input:
+s1="acb", n1=4
+s2="ab", n2=2
+
+Return:
+2
 ```
 
 #### 思路
 
-- 一个字符串切割多少次，可以切磋成所有的子字符串为回文字符串
+- 给两个字符串和重复次数，经过重复次数之后计算新的两个字符串S1,S2。
 
-- https://www.cnblogs.com/zuoyuan/p/3758783.html
+- 找出[S2,m]被s1包含。M要尽可能的大
 
-- 看不懂解法可以看youtube视频手动推导
+- http://www.cnblogs.com/grandyang/p/6149294.html
 
-- ```C++
-  class Solution {
-  public:
-      int minCut(string s) {
-          int n = s.size();
-          vector<int> cut(n+1, 0);  // number of cuts for the first k characters
-          for (int i = 0; i <= n; i++) cut[i] = i-1;
-          for (int i = 0; i < n; i++) {
-              for (int j = 0; i-j >= 0 && i+j < n && s[i-j]==s[i+j] ; j++) // odd length palindrome
-                  cut[i+j+1] = min(cut[i+j+1],1+cut[i-j]);
-  
-              for (int j = 1; i-j+1 >= 0 && i+j < n && s[i-j+1] == s[i+j]; j++) // even length palindrome
-                  cut[i+j+1] = min(cut[i+j+1],1+cut[i-j+1]);
+- 思路
+
+  - 如果用常规dp也可以做出来，无非一个个暴力增长长度
+  - 不过这里面的字符串是有规律
+  - 大字符串都是由小字符串重复添加而构成的
+  - 所以其实我们可以直接比较小字符串
+  - 然后算出一个小字符串的情况，才直接通过公式计算出大字符串的情况
+  - 具体看代码的注释
+
+- ```java
+  public class Solution {
+      public int getMaxRepetitions(String s1, int n1, String s2, int n2) {
+          //初始变量
+          int[] reps = new int[102];
+          int[] rests = new int[102];
+          int posRest=0, repTime=0;
+          int i=0, k=0;
+          if(n1 <= 0) return 0;
+          //小字符串的比较主要三种情况
+          //s2在s1正好可以找到对应字符
+          //s2在s1不可以找到对应字符
+          //s2在s1只找到一部分对应字符，下一部分还需要一个s1的字符串
+          //从鸽巢原理知道，两个s1合在一起的字符串一定能完美确定下来是否能包含s2
+          while(k==i) {
+              i++;
+              for(int j=0; j<s1.length(); j++) {
+                  //posRest专门跟踪s2的字符串内容
+                  //j跟踪s1的字符串
+                  if(s2.charAt(posRest) == s1.charAt(j)) {
+                      posRest++;
+                      //如果完整包含，那么就用repTime包含一次
+                      //同时postRest归0，重新计算，是否还有包含的内容
+                      if(posRest == s2.length()) {
+                          repTime++;
+                          posRest=0;
+                      }
+                  }
+              }
+              //i如果大于s1的重复次数
+              if(i >= n1)
+                  return repTime / n2;
+              //
+              for(k=0; k<i; k++){
+                  //说明位置没有变化
+                  if(posRest == rests[k])
+                      break;
+              }
+              //repTime给当前I的包含个数
+              //posRest给当前I的s2跟踪的位置，好为下一次循环做准备
+              reps[i] = repTime;
+              rests[i] = posRest;
           }
-          return cut[n];
+          //算出区间，多少个s1会迭代一次，显然根据鸽巢原理，interval最大等于2
+          int interval = i-k;
+          //计算一个单位字符串的重复次数
+          int repeatCount = (n1-k) / interval;
+          //计算整个前面部分的重复次数
+          int repeatTimes = repeatCount * (reps[i]-reps[k]);
+          //计算剩余字符串长度的重复次数
+          int remainTimes = reps[(n1-k) % interval + k];
+          //因为只是计算s2的出现重复次数，所以针对S2的情况，只需要除以一下n2就Ok
+          return (repeatTimes + remainTimes) / n2;
       }
-  };
+  }
   ```
 
-- ```python
-  class Solution:
-      # @param s, a string
-      # @return an integer
-      # @dfs time out
-      # @dp is how many palindromes in the word
-      def minCut(self, s):
-          dp = [0 for i in range(len(s)+1)]
-          p = [[False for i in range(len(s))] for j in range(len(s))]
-          for i in range(len(s)+1):
-              dp[i] = len(s) - i
-          for i in range(len(s)-1, -1, -1):
-              for j in range(i, len(s)):
-                  if s[i] == s[j] and (((j - i) < 2) or p[i+1][j-1]):
-                      p[i][j] = True
-                      dp[i] = min(1+dp[j+1], dp[i])
-          return dp[0]-1
+- 
+
+
+#### 629. [K Inverse Pairs Array](https://leetcode.com/problems/k-inverse-pairs-array/description/)
+
+Given two integers `n` and `k`, find how many different arrays consist of numbers from `1` to `n` such that there are exactly `k` inverse pairs.
+
+We define an inverse pair as following: For `ith` and `jth` element in the array, if `i` < `j` and `a[i]` > `a[j]` then it's an inverse pair; Otherwise, it's not.
+
+Since the answer may be very large, the answer should be modulo 109 + 7.
+
+**Example 1:**
+
+```
+Input: n = 3, k = 0
+Output: 1
+Explanation: 
+Only the array [1,2,3] which consists of numbers from 1 to 3 has exactly 0 inverse pair.
+```
+
+**Example 2:**
+
+```
+Input: n = 3, k = 1
+Output: 2
+Explanation: 
+The array [1,3,2] and [2,1,3] have exactly 1 inverse pair.
+```
+
+**Note:**
+
+1. The integer `n` is in the range [1, 1000] and `k` is in the range [0, 1000].
+
+#### 思路
+
+- 从1到n之间找出有多少个数组拥有k个逆序对
+
+- https://leetcode.com/problems/k-inverse-pairs-array/discuss/104815/Java-DP-O(nk)-solution
+
+- 逆序对的概念很容易理解，但是总是抓不到那个可以控制这个概念的规律
+
+- 从题解中
+
+- 假设正常的顺序的数组
+
+- 现在把第N个数放在第N个数，那么逆序对为0
+
+- 现在把第N个数放在第N-1个数，那么逆序对为1
+
+- 现在把第N个数放在第N-2个数，那么逆序对为2
+
+- 现在把第N个数放在第N-3个数，那么逆序对为3
+
+- 现在把第N个数放在第1个数，那么逆序对为n
+
+- 现在要找出拥有k个逆序对的数组就行
+
+- 根据上面的规律，已经可以用暴力法了
+
+- 既然可以用暴力法，就可以考虑用转换成dp
+
+- http://www.cnblogs.com/grandyang/p/7111385.html
+
+- ```
+  dp[n][k] = dp[n-1][k]+dp[n-1][k-1]+dp[n-1][k-2]+...+dp[n-1][k+1-n+1]+dp[n-1][k-n+1]
+  
+  dp[n][k] = dp[n-1][k]+dp[n-1][k-1]+dp[n-1][k-2]+...+dp[n-1][k+1-n+1]+dp[n-1][k-n+1]
+  
+  dp[n][k+1] = dp[n-1][k+1]+dp[n-1][k]+dp[n-1][k-1]+dp[n-1][k-2]+...+dp[n-1][k+1-n+1]
+  公式转换
+  dp[n][k+1] - dp[n][k]=dp[n-1][k+1] -dp[n-1][k+1-n]
+  最终的递推公式
+  dp[n][k+1] = dp[n][k]+dp[n-1][k+1]-dp[n-1][k+1-n]
+  ```
+
+  
+
+- ```java
+  public static int kInversePairs(int n, int k) {
+          int mod = 1000000007;
+          if (k > n*(n-1)/2 || k < 0) return 0;
+          if (k == 0 || k == n*(n-1)/2) return 1;
+          long[][] dp = new long[n+1][k+1];
+          dp[2][0] = 1;
+          dp[2][1] = 1;
+          for (int i = 3; i <= n; i++) {
+              dp[i][0] = 1;
+              for (int j = 1; j <= Math.min(k, i*(i-1)/2); j++) {
+                  //完美体现递推公式，尤其是在减法的那一步做了额外的处理
+                  dp[i][j] = dp[i][j-1] + dp[i-1][j];
+                  if (j >= i) dp[i][j] -= dp[i-1][j-i];
+                  dp[i][j] = (dp[i][j]+mod) % mod;
+              }
+          }
+          return (int) dp[n][k];
+      }
   ```
 
 
 
-#### 72. Edit Distance 
 
 
+#### 446. [Arithmetic Slices II - Subsequence](https://leetcode.com/problems/arithmetic-slices-ii-subsequence/description/)
 
-#### 309. Best Time to Buy and Sell Stock with Cooldown
+A sequence of numbers is called arithmetic if it consists of at least three elements and if the difference between any two consecutive elements is the same.
 
+For example, these are arithmetic sequences:
 
+```
+1, 3, 5, 7, 9
+7, 7, 7, 7
+3, -1, -5, -9
+```
 
+The following sequence is not arithmetic.
 
+```
+1, 1, 2, 5, 7
+```
 
-#### 714. Best Time to Buy and Sell Stock with Transaction Fee 
+ 
 
+A zero-indexed array A consisting of N numbers is given. A **subsequence** slice of that array is any sequence of integers (P0, P1, ..., Pk) such that 0 ≤ P0 < P1 < ... < Pk < N.
 
+A **subsequence** slice (P0, P1, ..., Pk) of array A is called arithmetic if the sequence A[P0], A[P1], ..., A[Pk-1], A[Pk] is arithmetic. In particular, this means that k ≥ 2.
 
+The function should return the number of arithmetic subsequence slices in the array A.
 
+The input contains N integers. Every integer is in the range of -231 and 231-1 and 0 ≤ N ≤ 1000. The output is guaranteed to be less than 231-1.
 
+ 
 
+**Example:**
 
-#### 121. Best Time to Buy and Sell Stock 
+```
+Input: [2, 4, 6, 8, 10]
 
+Output: 7
 
+Explanation:
+All arithmetic subsequence slices are:
+[2,4,6]
+[4,6,8]
+[6,8,10]
+[2,4,6,8]
+[4,6,8,10]
+[2,4,6,8,10]
+[2,6,10]
+```
 
+------
 
+#### 思路
 
+- 找出一个数组的所有等差数列或者等比数列。数列在数组中是序列形式
+- dp，行和列都分别对应数组的内容
+- 因为要打印出有规律的等差序列
+- 所以dp的内容该放什么呢
 
 
-#### 583. Delete Operation for Two Strings 
 
-#### 
 
 
+#### 818. Race Car 
 
-44.
+Your car starts at position 0 and speed +1 on an infinite number line.  (Your car can go into negative positions.)
 
+Your car drives automatically according to a sequence of instructions A (accelerate) and R (reverse).
 
+When you get an instruction "A", your car does the following: `position += speed, speed *= 2`.
 
-32.
+When you get an instruction "R", your car does the following: if your speed is positive then `speed = -1` , otherwise `speed = 1`.  (Your position stays the same.)
 
+For example, after commands "AAR", your car goes to positions 0->1->3->3, and your speed goes to 1->2->4->-1.
 
+Now for some target position, say the **length** of the shortest sequence of instructions to get there.
 
-639.
+```
+Example 1:
+Input: 
+target = 3
+Output: 2
+Explanation: 
+The shortest instruction sequence is "AA".
+Your position goes from 0->1->3.
+```
 
+```
+Example 2:
+Input: 
+target = 6
+Output: 5
+Explanation: 
+The shortest instruction sequence is "AAARA".
+Your position goes from 0->1->3->7->7->6.
+```
 
+**Note:**
 
-10.
+- `1 <= target <= 10000`.
 
-741.
+#### 思路
 
-174.
-
-321.
-
-140.
-
-871.
-
-
-
-132.
-
-
-
-97.
-
-466 .
-
-
-
-629.
-
-
-
-446.
-
-
-
-818.
-
-87.
-
-85.
-
-
-
-879.
-
-
-
-472.
-
-552.
-
-600
-
-115.
-
-354.
-
-403.
-
-363.
-
-664.
-
-691.
-
-730.
-
-546.
-
-517.
-
-514.
-
-410.
-
-689.
-
-847.
-
-312.
-
-
-
-
+- 
 
 ## 数组
 
@@ -1121,7 +1327,7 @@ You can assume that you can always reach the last index.
 - 因为一定会遍历到某个i位置。遍历到i位置的时候，说明已经可以更改我们的路径。我们的路径由之前走的路最大的路程决定。也就是max
 - 非常简短的代码
 
-```java
+​```java
 public int jump(int[] A) {
     int sc = 0;
     int e = 0;
@@ -1222,7 +1428,7 @@ Then the 1st smallest distance pair is (1,1), and its distance is 0.
   - 调整完再来后面两层循环，直到有合适的mid出现
 - 代码短小精悍
 
-```c++
+​```c++
 class Solution {
 public:
     int smallestDistancePair(vector<int>& nums, int k) {
@@ -2366,9 +2572,41 @@ Output: false
 - 如何判断s3是由s2和s1相互交错而成的
 - 解法一
   - dp
+
   - 行存放s1，列存放s2，内容存放true或false
+
   - s3当前的位置，由同一列的上一行或者同一行的上一列决定
+
   - 如果前置条件是true同时当前也可以匹配才能是true
+
+  - ```java
+    public boolean isInterleave(String s1, String s2, String s3) {
+    
+        if ((s1.length()+s2.length())!=s3.length()) return false;
+    
+        boolean[][] matrix = new boolean[s2.length()+1][s1.length()+1];
+    
+        matrix[0][0] = true;
+    
+        for (int i = 1; i < matrix[0].length; i++){
+            matrix[0][i] = matrix[0][i-1]&&(s1.charAt(i-1)==s3.charAt(i-1));
+        }
+    
+        for (int i = 1; i < matrix.length; i++){
+            matrix[i][0] = matrix[i-1][0]&&(s2.charAt(i-1)==s3.charAt(i-1));
+        }
+    
+        for (int i = 1; i < matrix.length; i++){
+            for (int j = 1; j < matrix[0].length; j++){
+                matrix[i][j] = (matrix[i-1][j]&&(s2.charAt(i-1)==s3.charAt(i+j-1)))
+                        || (matrix[i][j-1]&&(s1.charAt(j-1)==s3.charAt(i+j-1)));
+            }
+        }
+    
+        return matrix[s2.length()][s1.length()];
+    
+    }
+    ```
 - 解法二
   - dfs
   - 感觉很烦的解法
@@ -3560,4 +3798,99 @@ After calling your function, the tree should look like:
 ### 思路总结
 
 ### 题目
+
+
+
+## 格式有问题题目
+
+#### 132. [Palindrome Partitioning II](https://leetcode.com/problems/palindrome-partitioning-ii/description/)
+
+Given a string *s*, partition *s* such that every substring of the partition is a palindrome.
+
+Return the minimum cuts needed for a palindrome partitioning of *s*.
+
+**Example:**
+
+
+Input: "aab"
+Output: 1
+Explanation: The palindrome partitioning ["aa","b"] could be produced using 1 cut.
+
+
+
+
+#### 思路
+
+- 一个字符串切割多少次，可以切磋成所有的子字符串为回文字符串
+
+- https://www.cnblogs.com/zuoyuan/p/3758783.html
+
+- 看不懂解法可以看youtube视频手动推导
+
+  
+
+
+ 
+
+```c++
+- class Solution {
+  public:
+      int minCut(string s) {
+          int n = s.size();
+          vector<int> cut(n+1, 0);  // number of cuts for the first k characters
+          for (int i = 0; i <= n; i++) cut[i] = i-1;
+          for (int i = 0; i < n; i++) {
+              for (int j = 0; i-j >= 0 && i+j < n && s[i-j]==s[i+j] ; j++) // odd length palindrome
+                  
+                  cut[i+j+1] = min(cut[i+j+1],1+cut[i-j]);
+                            
+              for (int j = 1; i-j+1 >= 0 && i+j < n && s[i-j+1] == s[i+j]; j++) // even length palindrome
+              cut[i+j+1] = min(cut[i+j+1],1+cut[i-j+1]);
+      }
+      return cut[n];
+  }
+
+
+
+  };
+
+```
+
+
+
+```python
+ class Solution:
+
+      # @param s, a string
+
+      # @return an integer
+
+      # @dfs time out
+
+      # @dp is how many palindromes in the word
+
+      def minCut(self, s):
+
+          dp = [0 for i in range(len(s)+1)]
+
+          p = [[False for i in range(len(s))] for j in range(len(s))]
+
+          for i in range(len(s)+1):
+
+              dp[i] = len(s) - i
+
+          for i in range(len(s)-1, -1, -1):
+
+              for j in range(i, len(s)):
+
+                  if s[i] == s[j] and (((j - i) < 2) or pi+1):
+
+                      pi = True
+
+                      dp[i] = min(1+dp[j+1], dp[i])
+
+          return dp[0]-1
+
+```
+
 
