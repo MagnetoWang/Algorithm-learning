@@ -1154,9 +1154,42 @@ All arithmetic subsequence slices are:
 #### 思路
 
 - 找出一个数组的所有等差数列或者等比数列。数列在数组中是序列形式
+
 - dp，行和列都分别对应数组的内容
+
 - 因为要打印出有规律的等差序列
+
 - 所以dp的内容该放什么呢
+
+- http://www.cnblogs.com/grandyang/p/6057934.html
+
+- 提示,放a[j]-a[i]，也就是差值。差值如何应用，看代码注释
+
+- ```java
+      public int numberOfArithmeticSlices(int[] A) {
+          int re = 0;
+          //maps数组，分别代表A的位置
+          //每个位置都是kv结构，k表示某个差值，v表示拥有该差值的个数
+          HashMap<Integer, Integer>[] maps = new HashMap[A.length];
+          for(int i=0; i<A.length; i++) {
+              maps[i] = new HashMap<>();
+              int num = A[i];
+              for(int j=0; j<i; j++) {
+                  //分别计算A[i]-A[j]，无论负数还是正数
+                  if((long)num-A[j]>Integer.MAX_VALUE) continue;
+                  if((long)num-A[j]<Integer.MIN_VALUE) continue;
+                  int diff = num - A[j];
+                  //找出拥有该差值的个数
+                  int count = maps[j].getOrDefault(diff, 0);
+                  //i在原来的j的基础上要加上1，在加自己本身
+                  maps[i].put(diff, maps[i].getOrDefault(diff,0)+count+1);
+                  //总个数都是从j中提取
+                  re += count;
+              }
+          }
+          return re;
+      }
+  ```
 
 
 
