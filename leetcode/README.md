@@ -1195,7 +1195,7 @@ All arithmetic subsequence slices are:
 
 
 
-#### 818. Race Car 
+#### 818. [Race Car](https://leetcode.com/problems/race-car/description/) 
 
 Your car starts at position 0 and speed +1 on an infinite number line.  (Your car can go into negative positions.)
 
@@ -1235,7 +1235,162 @@ Your position goes from 0->1->3->7->7->6.
 
 #### 思路
 
-- 
+- 一辆车从起点出发到终点。现在有两种方式到达终点，一种是A，表示当前位置加上速度后，速度再乘以*2。另一种是R,当前位置不变，同时速度变为1或者-1。如果是正数变为-1，否则就是1
+
+- https://www.youtube.com/watch?v=HzlEkUt2TYs
+
+- https://leetcode.com/problems/race-car/discuss/123834/C++JavaPython-DP-solution
+
+- ```
+   //设置dp
+   int[] dp = new int[10001];
+      public int racecar(int t) {
+      
+          if (dp[t] > 0) return dp[t];
+          //计算能迭代的最大次数
+          int n = (int)(Math.log(t) / Math.log(2)) + 1;
+          //
+          if (1 << n == t + 1) dp[t] = n;
+          else {
+              dp[t] = racecar((1 << n) - 1 - t) + n + 1;
+              for (int m = 0; m < n - 1; ++m)
+                  dp[t] = Math.min(dp[t], racecar(t - (1 << (n - 1)) + (1 << m)) + n + m + 1);
+          }
+          return dp[t];
+      }
+  ```
+
+#### 87. [Scramble String](https://leetcode.com/problems/scramble-string/description/) 
+
+Given a string *s1*, we may represent it as a binary tree by partitioning it to two non-empty substrings recursively.
+
+Below is one possible representation of *s1* = `"great"`:
+
+```
+    great
+   /    \
+  gr    eat
+ / \    /  \
+g   r  e   at
+           / \
+          a   t
+```
+
+To scramble the string, we may choose any non-leaf node and swap its two children.
+
+For example, if we choose the node `"gr"` and swap its two children, it produces a scrambled string `"rgeat"`.
+
+```
+    rgeat
+   /    \
+  rg    eat
+ / \    /  \
+r   g  e   at
+           / \
+          a   t
+```
+
+We say that `"rgeat"` is a scrambled string of `"great"`.
+
+Similarly, if we continue to swap the children of nodes `"eat"` and `"at"`, it produces a scrambled string `"rgtae"`.
+
+```
+    rgtae
+   /    \
+  rg    tae
+ / \    /  \
+r   g  ta  e
+       / \
+      t   a
+```
+
+We say that `"rgtae"` is a scrambled string of `"great"`.
+
+Given two strings *s1* and *s2* of the same length, determine if *s2* is a scrambled string of *s1*.
+
+**Example 1:**
+
+```
+Input: s1 = "great", s2 = "rgeat"
+Output: true
+```
+
+**Example 2:**
+
+```
+Input: s1 = "abcde", s2 = "caebd"
+Output: false
+```
+
+#### 思路
+
+#### 85. [Maximal Rectangle](https://leetcode.com/problems/maximal-rectangle/description/) 
+
+#### 思路
+
+#### 123. [Best Time to Buy and Sell Stock III](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/description/) 
+
+#### 思路
+
+
+
+#### 879. Profitable Schemes
+
+There are G people in a gang, and a list of various crimes they could commit.
+
+The `i`-th crime generates a `profit[i]` and requires `group[i]` gang members to participate.
+
+If a gang member participates in one crime, that member can't participate in another crime.
+
+Let's call a *profitable scheme* any subset of these crimes that generates at least `P` profit, and the total number of gang members participating in that subset of crimes is at most G.
+
+How many schemes can be chosen?  Since the answer may be very large, **return it modulo** `10^9 + 7`.
+
+ 
+
+**Example 1:**
+
+```
+Input: G = 5, P = 3, group = [2,2], profit = [2,3]
+Output: 2
+Explanation: 
+To make a profit of at least 3, the gang could either commit crimes 0 and 1, or just crime 1.
+In total, there are 2 schemes.
+```
+
+**Example 2:**
+
+```
+Input: G = 10, P = 5, group = [2,3,5], profit = [6,7,8]
+Output: 7
+Explanation: 
+To make a profit of at least 5, the gang could commit any crimes, as long as they commit one.
+There are 7 possible schemes: (0), (1), (2), (0,1), (0,2), (1,2), and (0,1,2).
+```
+
+ 
+
+**Note:**
+
+1. `1 <= G <= 100`
+2. `0 <= P <= 100`
+3. `1 <= group[i] <= 100`
+4. `0 <= profit[i] <= 100`
+5. `1 <= group.length = profit.length <= 100`
+
+#### 思路
+
+
+
+
+
+思路
+
+
+
+思路
+
+
 
 ## 数组
 
