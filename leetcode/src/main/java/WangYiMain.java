@@ -4,8 +4,9 @@ import java.util.Scanner;
 public class WangYiMain  {
 
     public static void main(String[] args) {
-        wangyi_3();
+//        wangyi_3();
 
+        System.out.println("hello world");
     }
 
     public static void wangyi_1() {

@@ -28,6 +28,7 @@ $RECYCLE.BIN/
 .AppleDouble
 .LSOverride
 
+
 # Thumbnails
 ._*
 
@@ -46,7 +47,7 @@ Temporary Items
 *.idea
 /leetcode/.idea/workspace.xml
 */workspace.xml
-
+leetcode/target/classes/dp/*.class
 
 # Compiled class file
 *.class
