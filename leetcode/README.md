@@ -904,7 +904,6 @@ We made 2 refueling stops along the way, so we return 2.
   
   ```
 
-  
 
 #### 466. [Count The Repetitions](https://leetcode.com/problems/count-the-repetitions/description/)
 
@@ -1073,8 +1072,6 @@ The array [1,3,2] and [2,1,3] have exactly 1 inverse pair.
   最终的递推公式
   dp[n][k+1] = dp[n][k]+dp[n-1][k+1]-dp[n-1][k+1-n]
   ```
-
-  
 
 - ```java
   public static int kInversePairs(int n, int k) {
@@ -1258,6 +1255,7 @@ Your position goes from 0->1->3->7->7->6.
           }
           return dp[t];
       }
+   ```
   ```
 
 #### 87. [Scramble String](https://leetcode.com/problems/scramble-string/description/) 
@@ -1266,14 +1264,14 @@ Given a string *s1*, we may represent it as a binary tree by partitioning it to 
 
 Below is one possible representation of *s1* = `"great"`:
 
-```
+  ```
     great
    /    \
   gr    eat
  / \    /  \
 g   r  e   at
-           / \
-          a   t
+​           / \
+​          a   t
 ```
 
 To scramble the string, we may choose any non-leaf node and swap its two children.
@@ -1286,8 +1284,8 @@ For example, if we choose the node `"gr"` and swap its two children, it produces
   rg    eat
  / \    /  \
 r   g  e   at
-           / \
-          a   t
+​           / \
+​          a   t
 ```
 
 We say that `"rgeat"` is a scrambled string of `"great"`.
@@ -1300,8 +1298,8 @@ Similarly, if we continue to swap the children of nodes `"eat"` and `"at"`, it p
   rg    tae
  / \    /  \
 r   g  ta  e
-       / \
-      t   a
+​       / \
+​      t   a
 ```
 
 We say that `"rgtae"` is a scrambled string of `"great"`.
@@ -1499,7 +1497,7 @@ Your goal is to reach the last index in the minimum number of jumps.
 Input: [2,3,1,1,4]
 Output: 2
 Explanation: The minimum number of jumps to reach the last index is 2.
-    Jump 1 step from index 0 to 1, then 3 steps to the last index.
+​    Jump 1 step from index 0 to 1, then 3 steps to the last index.
 ```
 
 **Note:**
@@ -1619,20 +1617,20 @@ Then the 1st smallest distance pair is (1,1), and its distance is 0.
 ​```c++
 class Solution {
 public:
-    int smallestDistancePair(vector<int>& nums, int k) {
-        sort(nums.begin(), nums.end());
-        int n = nums.size(), left = 0, right = nums.back() - nums[0];
-        while (left < right) {
-            int mid = left + (right - left) / 2, cnt = 0, start = 0;
-            for (int i = 0; i < n; ++i) {
-                while (start < n && nums[i] - nums[start] > mid) ++start;
-                cnt += i - start;
-            }
-            if (cnt < k) left = mid + 1;
-            else right = mid;
-        }
-        return right;
-    }
+​    int smallestDistancePair(vector<int>& nums, int k) {
+​        sort(nums.begin(), nums.end());
+​        int n = nums.size(), left = 0, right = nums.back() - nums[0];
+​        while (left < right) {
+​            int mid = left + (right - left) / 2, cnt = 0, start = 0;
+​            for (int i = 0; i < n; ++i) {
+​                while (start < n && nums[i] - nums[start] > mid) ++start;
+​                cnt += i - start;
+​            }
+​            if (cnt < k) left = mid + 1;
+​            else right = mid;
+​        }
+​        return right;
+​    }
 };
 ```
 
@@ -1849,7 +1847,7 @@ Design an algorithm to find the maximum profit. You may complete at most *two* t
 Input: [3,3,5,0,0,3,1,4]
 Output: 6
 Explanation: Buy on day 4 (price = 0) and sell on day 6 (price = 3), profit = 3-0 = 3.
-             Then buy on day 7 (price = 1) and sell on day 8 (price = 4), profit = 4-1 = 3.
+​             Then buy on day 7 (price = 1) and sell on day 8 (price = 4), profit = 4-1 = 3.
 ```
 
 **Example 2:**
@@ -1858,8 +1856,8 @@ Explanation: Buy on day 4 (price = 0) and sell on day 6 (price = 3), profit = 3-
 Input: [1,2,3,4,5]
 Output: 4
 Explanation: Buy on day 1 (price = 1) and sell on day 5 (price = 5), profit = 5-1 = 4.
-             Note that you cannot buy on day 1, buy on day 2 and sell them later, as you are
-             engaging multiple transactions at the same time. You must sell before buying again.
+​             Note that you cannot buy on day 1, buy on day 2 and sell them later, as you are
+​             engaging multiple transactions at the same time. You must sell before buying again.
 ```
 
 **Example 3:**
@@ -1896,9 +1894,9 @@ Explanation: In this case, no transaction is done, i.e. max profit = 0.
   - ```
            l[i][j] = max(g[i - 1][j - 1] + max(diff, 0), l[i - 1][j] + diff);
            g[i][j] = max(l[i][j], g[i - 1][j]);
-       ```
+```
     ```
-  
+      
     ```
 
 - 全部代码，短小精悍
@@ -1940,7 +1938,6 @@ Explanation: In this case, no transaction is done, i.e. max profit = 0.
     };
     ```
 
-    
 
 #### 782. [Transform to Chessboard](https://leetcode.com/problems/transform-to-chessboard/discuss/114847/Easy-and-Concise-Solution-with-Explanation-C++JavaPython) 
 
@@ -2756,6 +2753,7 @@ Output: false
 #### 思路
 
 - 参考思路
+
   - http://www.cnblogs.com/grandyang/p/4298664.html
 - 如何判断s3是由s2和s1相互交错而成的
 - 解法一
@@ -3349,9 +3347,8 @@ Output: 42
   }
   ```
 
-  
 
- 
+
 
 #### 685. [Redundant Connection II](https://leetcode.com/problems/redundant-connection-ii/description/)
 
@@ -3432,7 +3429,6 @@ Every integer represented in the 2D-array will be between 1 and N, where N is th
       }
   ```
 
-  
 
 #### 99. [Recover Binary Search Tree](https://leetcode.com/problems/recover-binary-search-tree/description/) 
 
@@ -3525,7 +3521,6 @@ Output: [2,1,4,null,null,3]
   }
   ```
 
-  
 
 #### 834. [Sum of Distances in Tree](https://leetcode.com/problems/sum-of-distances-in-tree/description/)
 
@@ -3824,7 +3819,6 @@ Explanation: The LCA of nodes 5 and 4 is 5, since a node can be a descendant of 
   };
   ```
 
-  
 
 
 
@@ -3965,19 +3959,82 @@ After calling your function, the tree should look like:
   };
   ```
 
-  
+
+#### 106. Construct Binary Tree from Inorder and Postorder Traversal
+
+Given inorder and postorder traversal of a tree, construct the binary tree.
+
+**Note:**
+You may assume that duplicates do not exist in the tree.
+
+For example, given
+
+```
+inorder = [9,3,15,20,7]
+postorder = [9,15,7,20,3]
+```
+
+Return the following binary tree:
+
+```
+    3
+   / \
+  9  20
+    /  \
+   15   7
+```
+
+#### 思路
+
+- 借助map空间存储树的节点。只需左右节点位置赋值到位就行了
+- 
+
+```
+class Solution {
+public:
+    TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
+        if (inorder.empty()) return NULL;
+        reverse(postorder.begin(), postorder.end());
+        reverse(inorder.begin(), inorder.end());
+        TreeNode* root = new TreeNode(postorder[0]);
+        TreeNode** curr = &(root->right);
+        unordered_map<int, TreeNode*> seen;
+        seen[postorder[0]] = root;
+        int i = 0, j = 0;
+        while (j < inorder.size()) {
+            if (seen.count(inorder[j]) == 0) {
+                TreeNode* node = new TreeNode(postorder[++i]);
+                seen[node->val] = node;
+                *curr = node;
+                curr = &(node->right);
+            }
+            else {
+                curr = &(seen[inorder[j]]->left);
+                j++;
+            }
+        }
+        return root;
+    }
+};
+```
+
+
+
+#### 思路
 
 
 
 
 
-思路
+
+
+#### 思路
 
 
 
 
 
-
+#### 思路
 
 思路
 
@@ -4015,10 +4072,9 @@ Explanation: The palindrome partitioning ["aa","b"] could be produced using 1 cu
 
 - 看不懂解法可以看youtube视频手动推导
 
-  
 
 
- 
+
 
 ```c++
 - class Solution {
