@@ -3960,7 +3960,7 @@ After calling your function, the tree should look like:
   ```
 
 
-#### 106. Construct Binary Tree from Inorder and Postorder Traversal
+#### 106. [Construct Binary Tree from Inorder and Postorder Traversal](https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/)
 
 Given inorder and postorder traversal of a tree, construct the binary tree.
 
@@ -3987,7 +3987,12 @@ Return the following binary tree:
 #### 思路
 
 - 借助map空间存储树的节点。只需左右节点位置赋值到位就行了
-- 
+- 规律：后序遍历，最后一个一定是根
+- 前序遍历，第一个一定是根
+- 中序遍历就是用来辅助的
+- 中序的数字作为左右边界的互换条件
+- 如果中序的数字一直没有找到，那么安装后序遍历不停往右赋值
+- 如果中序的数字已经存在，那么让当前节点转移到后序的左节点
 
 ```
 class Solution {
@@ -4019,6 +4024,50 @@ public:
 ```
 
 
+
+#### 116. [Populating Next Right Pointers in Each Node](https://leetcode.com/problems/populating-next-right-pointers-in-each-node/)
+
+Given a binary tree
+
+```
+struct TreeLinkNode {
+  TreeLinkNode *left;
+  TreeLinkNode *right;
+  TreeLinkNode *next;
+}
+```
+
+Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to `NULL`.
+
+Initially, all next pointers are set to `NULL`.
+
+**Note:**
+
+- You may only use constant extra space.
+- Recursive approach is fine, implicit stack space does not count as extra space for this problem.
+- You may assume that it is a perfect binary tree (ie, all leaves are at the same level, and every parent has two children).
+
+**Example:**
+
+Given the following perfect binary tree,
+
+```
+     1
+   /  \
+  2    3
+ / \  / \
+4  5  6  7
+```
+
+After calling your function, the tree should look like:
+
+```
+     1 -> NULL
+   /  \
+  2 -> 3 -> NULL
+ / \  / \
+4->5->6->7 -> NULL
+```
 
 #### 思路
 
