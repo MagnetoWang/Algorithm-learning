@@ -1,5 +1,5 @@
 ============================================
-ÖØµã
+é‡ç‚¹
 g++ -o test DNAConsensusString.cpp
 
 
@@ -15,43 +15,43 @@ g++ -o test DNAConsensusString.cpp
 
 
 
-µÚÒ»²½£ºÔÚDOS½çÃæ½øÈëÕâ¸öÄ¿Â¼
+ç¬¬ä¸€æ­¥ï¼šåœ¨DOSç•Œé¢è¿›å…¥è¿™ä¸ªç›®å½•
 
-µÚ¶þ²½£ºÓÃg++ ¼ÓÉÏÎÄ¼þÃû£¬×¢ÒâÒª¼ÓÉÏÎÄ¼þÀ©Õ¹Ãû£¬ÕâÑù»áÉú³ÉÒ»¸öa.exeµÄ¿ÉÖ´ÐÐÎÄ¼þ£¨WindowsÄ¬ÈÏÉú³Éa.exe£¬LinuxÄ¬ÈÏÉú³Éa.out£©
+ç¬¬äºŒæ­¥ï¼šç”¨g++ åŠ ä¸Šæ–‡ä»¶åï¼Œæ³¨æ„è¦åŠ ä¸Šæ–‡ä»¶æ‰©å±•åï¼Œè¿™æ ·ä¼šç”Ÿæˆä¸€ä¸ªa.exeçš„å¯æ‰§è¡Œæ–‡ä»¶ï¼ˆWindowsé»˜è®¤ç”Ÿæˆa.exeï¼ŒLinuxé»˜è®¤ç”Ÿæˆa.outï¼‰
 
-ÒòÎªÕâÀïÊÇC++Ô´´úÂë£¬ËùÒÔÒªÓÃg++ÃüÁî£¬Èç¹ûÊÇCÓïÑÔµÄÔ´´úÂë£¬Ôò¼È¿ÉÊ¹ÓÃg++£¬Ò²¿ÉÒÔÊ¹ÓÃgcc£¨»òÕßcc£©ÃüÁî¡£
+å› ä¸ºè¿™é‡Œæ˜¯C++æºä»£ç ï¼Œæ‰€ä»¥è¦ç”¨g++å‘½ä»¤ï¼Œå¦‚æžœæ˜¯Cè¯­è¨€çš„æºä»£ç ï¼Œåˆ™æ—¢å¯ä½¿ç”¨g++ï¼Œä¹Ÿå¯ä»¥ä½¿ç”¨gccï¼ˆæˆ–è€…ccï¼‰å‘½ä»¤ã€‚
 
-µÚÈý²½£ºÖ±½ÓÊäÈëa.exe²¢»Ø³µ£¬ ¼´¿ÉÖ´ÐÐÓÉdemo.cpp±àÒëÁ´½ÓÉú³ÉµÄ³ÌÐò£¨Linux»·¾³ÏÂ£¬Ôò¸Ä³É  ./a.out ÔËÐÐ³ÌÐò£©
+ç¬¬ä¸‰æ­¥ï¼šç›´æŽ¥è¾“å…¥a.exeå¹¶å›žè½¦ï¼Œ å³å¯æ‰§è¡Œç”±demo.cppç¼–è¯‘é“¾æŽ¥ç”Ÿæˆçš„ç¨‹åºï¼ˆLinuxçŽ¯å¢ƒä¸‹ï¼Œåˆ™æ”¹æˆ  ./a.out è¿è¡Œç¨‹åºï¼‰
 
-µÚËÄ²½£º´ËÊ±£¬ÊäÈë²ÎÊý¼´aÓëbµÄÖµ£¬ÇÃ»÷»Ø³µÖ®ºó¼´¿É³ö½á¹û
+ç¬¬å››æ­¥ï¼šæ­¤æ—¶ï¼Œè¾“å…¥å‚æ•°å³aä¸Žbçš„å€¼ï¼Œæ•²å‡»å›žè½¦ä¹‹åŽå³å¯å‡ºç»“æžœ
 
- µÚÎå²½£ºÊ¹ÓÃCtrl+zÖÕÖ¹³ÌÐò
-
-
-
-¿´ÁËÉÏÃæµÄ¹ý³Ì£¬¿ÉÄÜÄã»á¾õµÃ²»·½±ã£¬
-
-1->Éú³ÉµÄ¿ÉÖ´ÐÐÎÄ¼þÊÇa.exe¶ø²»ÊÇÏ£ÍûµÃµ½µÄdemo.exe
-
-2->Ã¿Ò»´ÎµÄÃ¿Ò»Ìõ²âÊÔÊý¾Ý¶¼µÃÊÖ¶¯ÊäÈë£¬Ì«¹ýÓÚÂé·³
-
-Õë¶ÔÎÊÌâÒ»£º
-
-Ê×ÏÈ¿ÉÒÔ½«ÉÏÃæµÄµÚ¶þ²½ÖÐµÄg++ demo.cppÌí¼Ó¿ÉÑ¡Ïî-o
-
-Ê¹ÓÃg++ -o demo.exe demo.cpp (»òÕß g++ -o demo demo.cpp)¼´¿ÉÉú³Édemo.exe¿ÉÔËÐÐ³ÌÐò,
-
-Èç¹ûÏëÃüÃûÎªtest.exeÖ»Ðèg++ -o test demo.cpp (»òÕß g++ -o test demo.cpp)¼´¿É
+ ç¬¬äº”æ­¥ï¼šä½¿ç”¨Ctrl+zç»ˆæ­¢ç¨‹åº
 
 
-Õë¶ÔÎÊÌâ¶þ£º
 
-ÔËÐÐ³ÌÐòÈÔ¿ÉÒÔÓÃdemo.exeÃüÁî£¬µ«ÊÇ´ËÊ±»¹µÃÒ»ÌõÒ»ÌõµÄÊäÈë²âÊÔÊý¾Ý
+çœ‹äº†ä¸Šé¢çš„è¿‡ç¨‹ï¼Œå¯èƒ½ä½ ä¼šè§‰å¾—ä¸æ–¹ä¾¿ï¼Œ
 
-µ«ÎªÁË·½±ã£¬¿ÉÒÔ½«²âÊÔÊý¾ÝÊÂÏÈ±£´æÔÚÎÄ±¾ÎÄ¼þ£¨¼ÙÉèÎªinput.txt£©ÀïÃæ£¬
+1->ç”Ÿæˆçš„å¯æ‰§è¡Œæ–‡ä»¶æ˜¯a.exeè€Œä¸æ˜¯å¸Œæœ›å¾—åˆ°çš„demo.exe
 
-ÔËÐÐµÄÊ±ºòÖ±½ÓÍùÀïÃæ¶ÁÈ¡Êý¾Ý¼´¿É£¬×¢ÒâµÄÊÇinput.txtÀïÃæµÄÊý¾Ý¸ñÊ½Òª°´ÕÕdemo.exe¹æ¶¨µÄ¸ñÊ½
+2->æ¯ä¸€æ¬¡çš„æ¯ä¸€æ¡æµ‹è¯•æ•°æ®éƒ½å¾—æ‰‹åŠ¨è¾“å…¥ï¼Œå¤ªè¿‡äºŽéº»çƒ¦
 
-È»ºó½«½á¹ûÐ´ÈëÁíÍâÒ»¸öÎÄ±¾ÎÄ¼þ£¨¼ÙÉèÎªoutput.txt£©ÖÐ£¬Ö±½Ó²é¿´
+é’ˆå¯¹é—®é¢˜ä¸€ï¼š
 
-Ê¹ÓÃdemo.exe <input.txt> output.txt¼´¿ÉÍê³ÉÒÔÉÏ²Ù×÷
+é¦–å…ˆå¯ä»¥å°†ä¸Šé¢çš„ç¬¬äºŒæ­¥ä¸­çš„g++ demo.cppæ·»åŠ å¯é€‰é¡¹-o
+
+ä½¿ç”¨g++ -o demo.exe demo.cpp (æˆ–è€… g++ -o demo demo.cpp)å³å¯ç”Ÿæˆdemo.exeå¯è¿è¡Œç¨‹åº,
+
+å¦‚æžœæƒ³å‘½åä¸ºtest.exeåªéœ€g++ -o test demo.cpp (æˆ–è€… g++ -o test demo.cpp)å³å¯
+
+
+é’ˆå¯¹é—®é¢˜äºŒï¼š
+
+è¿è¡Œç¨‹åºä»å¯ä»¥ç”¨demo.exeå‘½ä»¤ï¼Œä½†æ˜¯æ­¤æ—¶è¿˜å¾—ä¸€æ¡ä¸€æ¡çš„è¾“å…¥æµ‹è¯•æ•°æ®
+
+ä½†ä¸ºäº†æ–¹ä¾¿ï¼Œå¯ä»¥å°†æµ‹è¯•æ•°æ®äº‹å…ˆä¿å­˜åœ¨æ–‡æœ¬æ–‡ä»¶ï¼ˆå‡è®¾ä¸ºinput.txtï¼‰é‡Œé¢ï¼Œ
+
+è¿è¡Œçš„æ—¶å€™ç›´æŽ¥å¾€é‡Œé¢è¯»å–æ•°æ®å³å¯ï¼Œæ³¨æ„çš„æ˜¯input.txté‡Œé¢çš„æ•°æ®æ ¼å¼è¦æŒ‰ç…§demo.exeè§„å®šçš„æ ¼å¼
+
+ç„¶åŽå°†ç»“æžœå†™å…¥å¦å¤–ä¸€ä¸ªæ–‡æœ¬æ–‡ä»¶ï¼ˆå‡è®¾ä¸ºoutput.txtï¼‰ä¸­ï¼Œç›´æŽ¥æŸ¥çœ‹
+
+ä½¿ç”¨demo.exe <input.txt> output.txtå³å¯å®Œæˆä»¥ä¸Šæ“ä½œ
